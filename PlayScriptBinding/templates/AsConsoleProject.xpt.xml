@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<Template originator   = "Ben Cooley"
+          created      = "01/21/2013"
+          lastModified = "01/21/2013">
+	
+	<!-- Template Header -->
+	<TemplateConfiguration>
+		<_Name>ActionScript Console Project</_Name>
+		<_Category>ActionScript</_Category>
+		<Icon>md-project-console|res:playscript-icon-32.png</Icon>
+		<LanguageName>PlayScript</LanguageName>
+		<_Description>Creates a new ActionScript console project.</_Description>
+	</TemplateConfiguration>
+	
+	<!-- Actions -->
+	<Actions>
+		<Open filename = "Main.as"/>
+	</Actions>
+	
+	<!-- Template Content -->
+	<Combine name = "${ProjectName}" directory = ".">
+		<Options>
+			<StartupProject>${ProjectName}</StartupProject>
+		</Options>
+		
+		<Project name = "${ProjectName}" directory = ".">
+			<Options ExternalConsole="True"/>
+			<References>
+				<Reference type="Package" refto="System" />
+				<Reference type="Gac" refto="pscorlib" />
+				<Reference type="Gac" refto="PlayScript.Dynamic" />
+			</References>
+			<Files>
+				<File name="Main.as" AddStandardHeader="True">
+<![CDATA[package
+{
+	public class MainClass
+	{
+		public static function Main():void
+		{
+			trace("Hello World!");
+		}
+	}
+}]]>
+				</File>
+			<FileTemplateReference TemplateID="CSharpAssemblyInfo" name="AssemblyInfo.cs" />
+			</Files>
+		</Project>
+	</Combine>
+</Template>

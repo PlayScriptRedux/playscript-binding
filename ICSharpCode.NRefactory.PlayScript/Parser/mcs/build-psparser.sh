@@ -1,0 +1,2 @@
+echo "./../../../../../../../playscript-mono/mcs/jay/jay -c < ./../../../../../../../playscript-mono/mcs/jay/skeleton.cs ps-parser.jay > jay-tmp.out && mv jay-tmp.out ps-parser.cs"
+./../../../../../../../playscript-mono/mcs/jay/jay -c < ./../../../../../../../playscript-mono/mcs/jay/skeleton.cs ps-parser.jay > jay-tmp.out && mv jay-tmp.out ps-parser.cs
