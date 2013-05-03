@@ -52,8 +52,8 @@ namespace MonoDevelop.PlayScript.Project
 			this.Build();
 			this.project = project;
 			DotNetProjectConfiguration configuration = (DotNetProjectConfiguration) project.GetConfiguration (IdeApp.Workspace.ActiveConfiguration);
-			CSharpCompilerParameters compilerParameters = (CSharpCompilerParameters) configuration.CompilationParameters;
-			CSharpProjectParameters projectParameters = (CSharpProjectParameters) configuration.ProjectParameters;
+			PlayScriptCompilerParameters compilerParameters = (PlayScriptCompilerParameters) configuration.CompilationParameters;
+			PlayScriptProjectParameters projectParameters = (PlayScriptProjectParameters) configuration.ProjectParameters;
 			
 			ListStore store = new ListStore (typeof (string));
 			store.AppendValues (GettextCatalog.GetString ("Executable"));
@@ -171,7 +171,7 @@ namespace MonoDevelop.PlayScript.Project
 			
 			project.CompileTarget = compileTarget;
 			
-			CSharpProjectParameters projectParameters = (CSharpProjectParameters) project.LanguageParameters; 
+			PlayScriptProjectParameters projectParameters = (PlayScriptProjectParameters) project.LanguageParameters; 
 			
 			projectParameters.CodePage = codePage;
 
@@ -182,7 +182,7 @@ namespace MonoDevelop.PlayScript.Project
 				projectParameters.MainClass = mainClassEntry.Entry.Text;
 			
 			foreach (DotNetProjectConfiguration configuration in configs) {
-				CSharpCompilerParameters compilerParameters = (CSharpCompilerParameters) configuration.CompilationParameters; 
+				PlayScriptCompilerParameters compilerParameters = (PlayScriptCompilerParameters) configuration.CompilationParameters; 
 				compilerParameters.UnsafeCode = allowUnsafeCodeCheckButton.Active;
 				compilerParameters.NoStdLib = noStdLibCheckButton.Active;
 				compilerParameters.LangVersion = langVersion;

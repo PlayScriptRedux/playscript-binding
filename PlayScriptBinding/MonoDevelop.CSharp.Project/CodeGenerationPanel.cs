@@ -36,7 +36,7 @@ namespace MonoDevelop.PlayScript.Project
 	partial class CodeGenerationPanelWidget : Gtk.Bin 
 	{
 		DotNetProjectConfiguration configuration;
-		CSharpCompilerParameters compilerParameters = null;
+		PlayScriptCompilerParameters compilerParameters = null;
 		
 		public CodeGenerationPanelWidget ()
 		{
@@ -46,7 +46,7 @@ namespace MonoDevelop.PlayScript.Project
 		public void Load (DotNetProjectConfiguration configuration)
 		{
 			this.configuration = configuration;
-			compilerParameters = (CSharpCompilerParameters) configuration.CompilationParameters;
+			compilerParameters = (PlayScriptCompilerParameters) configuration.CompilationParameters;
 			
 			symbolsEntry.Text                          = compilerParameters.DefineSymbols;
 			generateDebugInformationCheckButton.Active = configuration.DebugMode;

@@ -5,16 +5,16 @@
 	
 	<!-- Template Header -->
 	<TemplateConfiguration>
-		<_Name>PlayScript Library</_Name>
-		<_Category>PlayScript</_Category>
+		<_Name>ActionScript Library</_Name>
+		<_Category>ActionScript</_Category>
 		<Icon>md-project-library|res:playscript-icon-32.png</Icon>
-		<LanguageName>PlayScript</LanguageName>
-		<_Description>Creates an empty PlayScript class library</_Description>
+		<LanguageName>ActionScript</LanguageName>
+		<_Description>Creates an empty ActionScript class library</_Description>
 	</TemplateConfiguration>
 	
 	<!-- Actions -->
 	<Actions>
-		<Open filename = "MyClass.play"/>
+		<Open filename = "MyClass.as"/>
 	</Actions>
 	
 	<!-- Template Content -->
@@ -31,7 +31,7 @@
 				<Reference type="Package" refto="PlayScript.Dynamic_aot" />
 			</References>
 			<Files>
-				<FileTemplateReference TemplateID="PsEmptyClass" name="MyClass.play" />
+				<FileTemplateReference TemplateID="PsEmptyClass" name="MyClass.as" />
 				<FileTemplateReference TemplateID="CSharpAssemblyInfo" name="AssemblyInfo.cs" />
 			</Files>
 		</Project>

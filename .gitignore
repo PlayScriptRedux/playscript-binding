@@ -32,6 +32,9 @@
 *.opensdf
 *.resources
 *.res
+*.mdb
+*.mpack
+*.userprefs
 ipch/
 obj/
 [Bb]in

@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.NRefactory.PlayScript", "ICSharpCode.NRefactory.PlayScript\ICSharpCode.NRefactory.PlayScript.csproj", "{6587E3E6-B14F-4924-B39D-512A78C4C1B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayScriptBinding", "PlayScriptBinding\PlayScriptBinding.csproj", "{6D8647C9-D479-46CD-A872-6999A8BF156C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Any CPU = Release|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		net_4_5_Debug|Any CPU = net_4_5_Debug|Any CPU
+		net_4_5_Release|Any CPU = net_4_5_Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6587E3E6-B14F-4924-B39D-512A78C4C1B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6587E3E6-B14F-4924-B39D-512A78C4C1B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6587E3E6-B14F-4924-B39D-512A78C4C1B2}.net_4_5_Debug|Any CPU.ActiveCfg = net_4_5_Debug|Any CPU
+		{6587E3E6-B14F-4924-B39D-512A78C4C1B2}.net_4_5_Debug|Any CPU.Build.0 = net_4_5_Debug|Any CPU
+		{6587E3E6-B14F-4924-B39D-512A78C4C1B2}.net_4_5_Release|Any CPU.ActiveCfg = net_4_5_Release|Any CPU
+		{6587E3E6-B14F-4924-B39D-512A78C4C1B2}.net_4_5_Release|Any CPU.Build.0 = net_4_5_Release|Any CPU
+		{6587E3E6-B14F-4924-B39D-512A78C4C1B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6587E3E6-B14F-4924-B39D-512A78C4C1B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D8647C9-D479-46CD-A872-6999A8BF156C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D8647C9-D479-46CD-A872-6999A8BF156C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D8647C9-D479-46CD-A872-6999A8BF156C}.net_4_5_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D8647C9-D479-46CD-A872-6999A8BF156C}.net_4_5_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D8647C9-D479-46CD-A872-6999A8BF156C}.net_4_5_Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D8647C9-D479-46CD-A872-6999A8BF156C}.net_4_5_Release|Any CPU.Build.0 = Debug|Any CPU
+		{6D8647C9-D479-46CD-A872-6999A8BF156C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D8647C9-D479-46CD-A872-6999A8BF156C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ICSharpCode.NRefactory.PlayScript\ICSharpCode.NRefactory.PlayScript.csproj
+	EndGlobalSection
+EndGlobal

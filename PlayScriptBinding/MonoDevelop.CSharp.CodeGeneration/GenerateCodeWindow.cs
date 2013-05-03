@@ -32,8 +32,9 @@ using MonoDevelop.Refactoring;
 using System.Collections.Generic;
 using MonoDevelop.Ide;
 using Mono.TextEditor.PopupWindow;
+using MonoDevelop.CodeGeneration;
 
-namespace MonoDevelop.CodeGeneration
+namespace MonoDevelop.PlayScript.CodeGeneration
 {
 	public partial class GenerateCodeWindow : Gtk.Window
 	{

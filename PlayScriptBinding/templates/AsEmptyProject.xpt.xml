@@ -5,11 +5,11 @@
 	
 	<!-- Template Header -->
 	<TemplateConfiguration>
-		<_Name>PlayScript Empty Project</_Name>
-		<_Category>PlayScript</_Category>
+		<_Name>ActionScript Empty Project</_Name>
+		<_Category>ActionScript</_Category>
 		<Icon>md-project|res:playscript-icon-32.png</Icon>
-		<LanguageName>PlayScript</LanguageName>
-		<_Description>Creates an empty PlayScript project.</_Description>
+		<LanguageName>ActionScript</LanguageName>
+		<_Description>Creates an empty ActionScript project.</_Description>
 	</TemplateConfiguration>
 	
 	<Combine name = "${ProjectName}" directory = ".">

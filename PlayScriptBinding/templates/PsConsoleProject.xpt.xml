@@ -24,11 +24,11 @@
 		</Options>
 		
 		<Project name = "${ProjectName}" directory = ".">
-			<Options ExternalConsole="True"/>
+			<Options ExternalConsole="True" TargetFrameworkVersion = "4.0" />
 			<References>
 				<Reference type="Package" refto="System" />
-				<Reference type="Gac" refto="pscorlib" />
-				<Reference type="Gac" refto="PlayScript.Dynamic" />
+				<Reference type="Package" refto="pscorlib_aot" />
+				<Reference type="Package" refto="PlayScript.Dynamic_aot" />
 			</References>
 			<Files>
 				<File name="Main.play" AddStandardHeader="True">

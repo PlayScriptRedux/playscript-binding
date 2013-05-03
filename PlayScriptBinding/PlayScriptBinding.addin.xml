@@ -41,13 +41,27 @@
 		<FileTemplate id = "ActionScriptEmptyInterface" resource = "AsEmptyInterface.xft.xml"/>		
 		<FileTemplate id = "PlayScriptEmptyFile" resource = "PsEmptyFile.xft.xml"/>
 		<FileTemplate id = "PlayScriptEmptyClass" resource = "PsEmptyClass.xft.xml"/>
-		<FileTemplate id = "PlayScriptEmptyInterface" resource = "PsEmptyInterface.xft.xml"/>		
+		<FileTemplate id = "PlayScriptEmptyInterface" resource = "PsEmptyInterface.xft.xml"/>
+	</Extension>
+
+	<Extension path="/MonoDevelop/Core/SupportPackages">
+		<Condition id="PackageNotInstalled" name="playscript" version="1.2.0">
+			<Package name="playscript" version="1.2.0" clrVersion="Default">
+				<Assembly file="pscorlib.dll" />
+	  			<Assembly file="PlayScript.Dynamic.dll" />
+	  			<Assembly file="Mono.PlayScript.dll" />
+				<Assembly file="pscorlib_aot.dll" />
+				<Assembly file="PlayScript.Dynamic_aot.dll" />
+			</Package>
+		</Condition>
 	</Extension>
 
 	<Extension path = "/MonoDevelop/Ide/ProjectTemplates">
 		<ProjectTemplate id = "PlayScriptEmptyProject" resource = "PsEmptyProject.xpt.xml"/>
 		<ProjectTemplate id = "PlayScriptLibrary" resource = "PsLibrary.xpt.xml"/>
 		<ProjectTemplate id = "PlayScriptConsoleProject" resource = "PsConsoleProject.xpt.xml"/>
+		<ProjectTemplate id = "ActionScriptEmptyProject" resource = "AsEmptyProject.xpt.xml"/>
+		<ProjectTemplate id = "ActionScriptLibrary" resource = "AsLibrary.xpt.xml"/>
 		<ProjectTemplate id = "ActionScriptConsoleProject" resource = "AsConsoleProject.xpt.xml"/>
 	</Extension>
 

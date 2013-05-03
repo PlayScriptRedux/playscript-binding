@@ -49,6 +49,7 @@ using ICSharpCode.NRefactory.PlayScript.TypeSystem;
 using Mono.TextEditor;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.CodeGeneration;
+using MonoDevelop.PlayScript.CodeGeneration;
 
 namespace MonoDevelop.PlayScript.Completion
 {

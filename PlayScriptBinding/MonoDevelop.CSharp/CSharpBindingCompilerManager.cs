@@ -352,10 +352,18 @@ namespace MonoDevelop.PlayScript
 		static string GetExternalCompilerPath()
 		{
 			string compPath;
-			string asmPath =  System.IO.Path.GetDirectoryName((new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath);
+			string asmPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
 			if (System.Environment.OSVersion.Platform == PlatformID.Unix || 
 				System.Environment.OSVersion.Platform == PlatformID.MacOSX) {
+
+				string playscriptHome = System.Environment.GetEnvironmentVariable("PLAYSCRIPT_HOME");
+				if (!String.IsNullOrEmpty(playscriptHome)) {
+					compPath = System.IO.Path.Combine(playscriptHome, "bin/playc");
+					if (File.Exists (compPath)) {
+						return compPath;
+					}
+				}
 
 				// Installed as a framework, etc.
 				compPath = "/usr/bin/playc";
@@ -364,41 +372,55 @@ namespace MonoDevelop.PlayScript
 				}
 
 				// Installed in the user's home folder
-				compPath = Environment.GetEnvironmentVariable ("HOME") + "/PlayScript/bin/playc";
-				if (File.Exists (compPath)) {
-					return compPath;
-				}
+//				compPath = System.Environment.GetEnvironmentVariable ("HOME") + "/PlayScript/bin/playc";
+//				if (File.Exists (compPath)) {
+//					return compPath;
+//				}
 
 				// The compiler bundled with the plugin
 				compPath = System.IO.Path.Combine (asmPath + "/playc");
 				if (File.Exists (compPath)) {
-					return compPath;
+					Mono.Unix.Native.Syscall.chmod (compPath, Mono.Unix.Native.FilePermissions.S_IXOTH | 
+					                                Mono.Unix.Native.FilePermissions.S_IROTH | 
+					                                Mono.Unix.Native.FilePermissions.S_IRWXU | 
+					                                Mono.Unix.Native.FilePermissions.S_IRWXG);
 				}
-			
+
+				return compPath;
+
 			} else if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
 			           System.Environment.OSVersion.Platform == PlatformID.Win32Windows) {
 
 				string progFilePath;
 
+				string playscriptHome = System.Environment.GetEnvironmentVariable("PLAYSCRIPT_HOME");
+				if (!String.IsNullOrEmpty(playscriptHome)) {
+					compPath = System.IO.Path.Combine(playscriptHome, "bin\\playc.bat");
+					if (File.Exists (compPath)) {
+						return compPath;
+					}
+				}
+
 				if (8 == IntPtr.Size 
-					|| (!String.IsNullOrEmpty (Environment.GetEnvironmentVariable ("PROCESSOR_ARCHITEW6432")))) {
-					progFilePath = System.Runtime.Environment.GetEnvironmentVariable ("ProgramFiles(x86)");
+					|| (!String.IsNullOrEmpty (System.Environment.GetEnvironmentVariable ("PROCESSOR_ARCHITEW6432")))) {
+					progFilePath = System.Environment.GetEnvironmentVariable ("ProgramFiles(x86)");
 				} else {
-					progFilePath = System.Runtime.Environment.GetEnvironmentVariable("ProgramFiles");
+					progFilePath = System.Environment.GetEnvironmentVariable("ProgramFiles");
 				}
 
 				// Installed in Program Files (x86)
-				compPath = progFilePath + "\\PlayScript\\bin\\playc.exe";
+				compPath = progFilePath + "\\PlayScript\\bin\\playc.bat";
 				if (File.Exists (compPath)) {
 					return compPath;
 				}
 
 				// The compiler bundled with the plugin
-				compPath = System.IO.Path.Combine (asmPath + "\\playc.exe");
+				compPath = System.IO.Path.Combine (asmPath + "\\playc.bat");
 				if (File.Exists (compPath)) {
-					return compPath;
+					// Do nothing..
 				}
 
+				return compPath;
 			}
 
 			return null;

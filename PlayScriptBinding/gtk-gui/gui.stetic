@@ -7,13 +7,12 @@
   <import>
     <widget-library name="../../../../build/bin/MonoDevelop.Ide.dll" />
     <widget-library name="../../../../build/bin/Mono.TextEditor.dll" />
-    <widget-library name="../../../../build/AddIns/MonoDevelop.Debugger/MonoDevelop.Debugger.dll" />
     <widget-library name="../../../../build/AddIns/MonoDevelop.DesignerSupport/MonoDevelop.DesignerSupport.dll" />
     <widget-library name="../../../../build/AddIns/DisplayBindings/SourceEditor/MonoDevelop.SourceEditor2.dll" />
     <widget-library name="../../../../build/AddIns/MonoDevelop.Refactoring/MonoDevelop.Refactoring.dll" />
-    <widget-library name="../../../../build/AddIns/BackendBindings/MonoDevelop.CSharpBinding.dll" internal="true" />
+    <widget-library name="../../../../build/AddIns/BackendBindings/MonoDevelop.PlayScriptBinding.dll" internal="true" />
   </import>
-  <widget class="Gtk.Bin" id="MonoDevelop.CSharp.Project.CodeGenerationPanelWidget" design-size="365 448">
+  <widget class="Gtk.Bin" id="MonoDevelop.PlayScript.Project.CodeGenerationPanelWidget" design-size="365 448">
     <property name="MemberName" />
     <property name="GeneratePublic">False</property>
     <child>
@@ -492,7 +491,7 @@ Itanium</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="MonoDevelop.CSharp.Project.CompilerOptionsPanelWidget" design-size="471 438">
+  <widget class="Gtk.Bin" id="MonoDevelop.PlayScript.Project.CompilerOptionsPanelWidget" design-size="471 438">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
@@ -885,7 +884,7 @@ Itanium</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="MonoDevelop.CSharp.Formatting.CSharpFormattingPolicyPanelWidget" design-size="283 300">
+  <widget class="Gtk.Bin" id="MonoDevelop.PlayScript.Formatting.CSharpFormattingPolicyPanelWidget" design-size="283 300">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
@@ -955,7 +954,7 @@ Itanium</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="MonoDevelop.CSharp.Formatting.NewFormattingProfileDialog" design-size="370 179">
+  <widget class="Gtk.Dialog" id="MonoDevelop.PlayScript.Formatting.NewFormattingProfileDialog" design-size="370 179">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <property name="Title" translatable="yes">New Profile</property>
@@ -1082,7 +1081,7 @@ Itanium</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="MonoDevelop.CSharp.Formatting.CSharpFormattingProfileDialog" design-size="880 551">
+  <widget class="Gtk.Dialog" id="MonoDevelop.PlayScript.Formatting.CSharpFormattingProfileDialog" design-size="880 551">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -1746,7 +1745,7 @@ Itanium</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionPanelWidget" design-size="300 300">
+  <widget class="Gtk.Bin" id="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanelWidget" design-size="300 300">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -1833,7 +1832,7 @@ Itanium</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="MonoDevelop.CodeGeneration.GenerateCodeWindow" design-size="288 369">
+  <widget class="Gtk.Window" id="MonoDevelop.PlayScript.CodeGeneration.GenerateCodeWindow" design-size="288 369">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <property name="Title" translatable="yes">GenerateCodeWindow</property>
@@ -1915,7 +1914,7 @@ Itanium</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="MonoDevelop.CSharp.Refactoring.CodeIssues.NameConventionEditRuleDialog" design-size="646 508">
+  <widget class="Gtk.Dialog" id="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionEditRuleDialog" design-size="646 508">
     <property name="MemberName" />
     <property name="WidthRequest">640</property>
     <property name="HeightRequest">480</property>
@@ -2344,7 +2343,6 @@ Itanium</property>
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes">_PascalCase</property>
-                            <property name="Active">True</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
