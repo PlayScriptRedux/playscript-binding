@@ -11,14 +11,30 @@ way, the PlayScriptBinding is always kept in perfect sync with the current featu
 
 The folders are:
 
-PlayScriptBinding - The copy of the playscript-monodevelop /main/src/addins/PlayScriptBinding with patches applied to update the MonoDevelop dll references.
-ICSharpCode.NRefactory.PlayScript - The copy of the playscript-monodevelop /main/src/addins/ICSharpCode.NRefactory.PlayScript with patches applied to update the MonoDevelop dll references.
-PlayScriptPatches - An archive copy of the playscript-monodevelop /main/src/addins/PlayScriptPatches folder which hold the current patches to the CSharpBinding and the scripts which update, apply and revert the patches.
+PlayScriptBinding
+
+The copy of the playscript-monodevelop /main/src/addins/PlayScriptBinding with patches applied to update the MonoDevelop dll references.
+
+ICSharpCode.NRefactory.PlayScript
+
+The copy of the playscript-monodevelop /main/src/addins/ICSharpCode.NRefactory.PlayScript with patches applied to update the MonoDevelop dll references.
+
+PlayScriptPatches
+
+An archive copy of the playscript-monodevelop /main/src/addins/PlayScriptPatches folder which hold the current patches to the CSharpBinding and the scripts which update, apply and revert the patches.
 
 The scripts are:
 
-update-binding.sh - Copies the current binding projects from the ../playscript-monodevelop submodule folder in the parent folder (we assume we're running from the playscript-dist folder).
-update-project-patches.sh - Updates the project patches from the current projects in this folder (these are applied every time update-bindings.sh are run to fix the project references and ouput folder).
-rebuild-binding.sh - Runs xbuild to rebuild the binding solution, copies the various sidecar files (compiler, dlls, etc) to the addin-build folder, then runs a test build with mdtool setup pack to test building the addin (in case there are missing files).
+update-binding.sh
+
+Copies the current binding projects from the ../playscript-monodevelop submodule folder in the parent folder (we assume we're running from the playscript-dist folder).
+
+update-project-patches.sh
+
+Updates the project patches from the current projects in this folder (these are applied every time update-bindings.sh are run to fix the project references and ouput folder).
+
+rebuild-binding.sh
+
+Runs xbuild to rebuild the binding solution, copies the various sidecar files (compiler, dlls, etc) to the addin-build folder, then runs a test build with mdtool setup pack to test building the addin (in case there are missing files).
 
 
