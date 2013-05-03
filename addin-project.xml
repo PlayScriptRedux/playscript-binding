@@ -1,12 +1,12 @@
 <AddinProject appVersion="4.0.3">
   <Project platforms="Mac Linux">
-    <AddinFile>addin-build/addin.info</AddinFile>
+    <AddinFile>addin-build/PlayScriptBinding.dll</AddinFile>
     <BuildFile>PlayScriptBinding.sln</BuildFile>
     <BuildConfiguration>Debug</BuildConfiguration>
   </Project>
-  <Project platforms="Win32">
+  <!-- Project platforms="Win32">
     <AddinFile>addin-build/addin.info</AddinFile>
     <BuildFile>PlayScriptBinding.sln</BuildFile>
     <BuildConfiguration>Debug</BuildConfiguration>
-  </Project>
+  </Project -->
 </AddinProject>
