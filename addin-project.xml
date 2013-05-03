@@ -1,12 +1,12 @@
-<AddinProject appVersion="3.0">
+<AddinProject appVersion="4.0.3">
   <Project platforms="Mac Linux">
-    <AddinFile>MonoDevelop.FSharpBinding/MonoDevelop.FSharp/bin/Debug/FSharpBinding.dll</AddinFile>
-    <BuildFile>MonoDevelop.FSharpBinding/MonoDevelop.FSharp.sln</BuildFile>
+    <AddinFile>addin-build/addin.info</AddinFile>
+    <BuildFile>PlayScriptBinding.sln</BuildFile>
     <BuildConfiguration>Debug</BuildConfiguration>
   </Project>
   <Project platforms="Win32">
-    <AddinFile>bin/FSharpBinding.dll</AddinFile>
-    <BuildFile>MonoDevelop.FSharpBinding/FSharp.MonoDevelop.sln</BuildFile>
+    <AddinFile>addin-build/addin.info</AddinFile>
+    <BuildFile>PlayScriptBinding.sln</BuildFile>
     <BuildConfiguration>Debug</BuildConfiguration>
   </Project>
 </AddinProject>
