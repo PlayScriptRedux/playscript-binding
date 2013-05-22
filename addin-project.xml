@@ -1,4 +1,4 @@
-<AddinProject appVersion="4.0.3">
+<AddinProject appVersion="4.0.5">
   <Project platforms="Mac Linux">
     <AddinFile>addin-build/addin.info</AddinFile>
     <BuildFile>PlayScriptBinding.sln</BuildFile>
