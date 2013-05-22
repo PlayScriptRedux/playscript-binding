@@ -8,7 +8,7 @@
   url="http://playscript.github.io/" 
   description="PlayScript support for MonoDevelop." 
   category="Language bindings" 
-  version="_MDVER" 
+  version="_VER" 
   flags="None">
 
   <Dependencies>
