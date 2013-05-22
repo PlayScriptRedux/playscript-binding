@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<Template>
+	<TemplateConfiguration>
+		<_Name>OpenGL Application</_Name>
+		<_Category>C#/iOS/iPhone Storyboard</_Category>
+		<Icon>md-project-iphone</Icon>
+		<LanguageName>C#</LanguageName>
+		<_Description>OpenGL application project for iPhone. With storyboard support.</_Description>
+	</TemplateConfiguration>
+	
+	<Actions>
+		<Open filename = "AppDelegate.cs"/>
+	</Actions>
+	
+	<Combine name = "${ProjectName}" directory = ".">
+		<Options>
+			<StartupProject>${ProjectName}</StartupProject>
+		</Options>
+		
+		<Project name = "${ProjectName}" directory = "." type = "IPhone">
+			<Options MainNibFile="MainWindow.xib" />
+			<References>
+				<Reference type="Gac" refto="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Core, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="monotouch" />
+				<Reference type="Gac" refto="OpenTK-1.0" />
+			</References>
+			<Files>
+				<Directory name="Resources" />
+				<File name="Info.plist" AddStandardHeader="False" src="../Common/Info_iPhone.Storyboard.plist.xml" />
+				<File name="Main.cs" AddStandardHeader="True" src="../Common/Main.cs" />
+				<File name="AppDelegate.cs" AddStandardHeader="True" src="../OpenGL/AppDelegate.Storyboard.cs" />
+				<RawFile name="MainStoryboard.storyboard" src="../OpenGL/MainStoryboard.storyboard" />
+				<File name="OpenGLViewController.cs" AddStandardHeader="True" src="OpenGLViewController.Storyboard.cs" />
+				<File name="EAGLView.cs" AddStandardHeader="True" src="EAGLView.cs" />
+				<File name="Shader.fsh" AddStandardHeader="False" src="../OpenGL/Shader.fsh" />
+				<File name="Shader.vsh" AddStandardHeader="False" src="../OpenGL/Shader.vsh" />
+			</Files>
+		</Project>
+	</Combine>
+</Template>

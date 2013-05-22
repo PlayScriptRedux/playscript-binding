@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<Template>
+	<TemplateConfiguration>
+		<_Name>Single View Application</_Name>
+		<_Category>C#/iOS/Universal</_Category>
+		<Icon>md-project-iphone</Icon>
+		<LanguageName>C#</LanguageName>
+		<_Description>Single view application project for iPhone and iPad.</_Description>
+	</TemplateConfiguration>
+	
+	<Actions>
+		<Open filename = "AppDelegate.cs"/>
+	</Actions>
+	
+	<Combine name = "${ProjectName}" directory = ".">
+		<Options>
+			<StartupProject>${ProjectName}</StartupProject>
+		</Options>
+		
+		<Project name = "${ProjectName}" directory = "." type = "IPhone">
+			<References>
+				<Reference type="Gac" refto="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Core, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="monotouch" />
+			</References>
+			<Files>
+				<Directory name="Resources" />
+				<File name="Info.plist" AddStandardHeader="False" src="../Common/Info_Universal.plist.xml" />
+				<File name="Main.cs" AddStandardHeader="True" src="../Common/Main.cs" />
+				<File name="AppDelegate.cs" AddStandardHeader="True" src="Common/AppDelegate.cs" />
+				<File name="${SafeProjectName}ViewController_iPhone.xib" AddStandardHeader="False"
+					src="IPhone/ViewController.xib" />
+				<File name="${SafeProjectName}ViewController_iPad.xib" AddStandardHeader="False"
+					src="IPad/ViewController.xib" />
+				<File name="${SafeProjectName}ViewController.cs" AddStandardHeader="True" src="Universal/ViewController.cs" />
+				<File name="${SafeProjectName}ViewController.designer.cs" AddStandardHeader="False"
+					DependsOn="${SafeProjectName}ViewController.cs"
+					src="Common/ViewController.designer.cs" />
+			</Files>
+		</Project>
+	</Combine>
+</Template>

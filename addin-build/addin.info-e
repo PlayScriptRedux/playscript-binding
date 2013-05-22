@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+  id="PlayScriptBinding" 
+  namespace="MonoDevelop" 
+  name="PlayScript support for MonoDevelop" 
+  author="Ben Cooley/Icer Addis" 
+  copyright="Apache" 
+  url="http://playscript.github.io/" 
+  description="PlayScript support for MonoDevelop." 
+  category="Language bindings" 
+  version="0.1.3" 
+  flags="None">
+
+  <Dependencies>
+    <Addin id="Ide" version="_MDVER" />
+    <Addin id="Core" version="_MDVER" />
+    <Addin id="SourceEditor2" version="_MDVER" />
+    <Addin id="DesignerSupport" version="_MDVER" />
+  </Dependencies>
+  
+  <Runtime>
+    <Import assembly="ICSharpCode.NRefactory.PlayScript.dll" />
+    <Import assembly="MonoDevelop.PlayScriptBinding.dll" />
+    <Import assembly="PlayScript.Dynamic.dll" />
+    <Import assembly="PlayScript.Dynamic_aot.dll" />
+    <Import assembly="pscorlib.dll" />
+    <Import assembly="pscorlib_aot.dll" />
+    <Import assembly="Mono.PlayScript.dll" />
+    <Import file="playc.exe" />
+    <Import file="playc" />
+  </Runtime>
+
+  <Extension path="/MonoDevelop/Core/SupportPackages">
+    <Package name="pscorlib" version="1.0" clrVersion="Default">
+      <Assembly file="PlayScript.Dynamic.dll" />
+      <Assembly file="pscorlib.dll" />
+      <Assembly file="Mono.PlayScript.dll" />
+    </Package>
+    <Package name="pscorlib_aot" version="1.0" clrVersion="Default">
+      <Assembly file="PlayScript.Dynamic_aot.dll" />
+      <Assembly file="pscorlib_aot.dll" />
+    </Package>
+  </Extension>
+
+</Addin>

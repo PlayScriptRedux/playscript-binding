@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Template>
+	<TemplateConfiguration>
+		<_Name>Tabbed Application</_Name>
+		<_Category>C#/iOS/Universal Storyboard</_Category>
+		<Icon>md-project-iphone</Icon>
+		<LanguageName>C#</LanguageName>
+		<_Description>Tabbed application project for iPhone and iPad. With storyboard support.</_Description>
+	</TemplateConfiguration>
+	
+	<Actions>
+		<Open filename = "AppDelegate.cs"/>
+	</Actions>
+	
+	<Combine name = "${ProjectName}" directory = ".">
+		<Options>
+			<StartupProject>${ProjectName}</StartupProject>
+		</Options>
+		
+		<Project name = "${ProjectName}" directory = "." type = "IPhone">
+			<References>
+				<Reference type="Gac" refto="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Core, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="monotouch" />
+			</References>
+			<Files>
+				<File name="Info.plist" AddStandardHeader="False" src="../Common/Info_Universal.Storyboard.plist.xml" />
+				<File name="Main.cs" AddStandardHeader="True" src="../Common/Main.cs" />
+				<File name="AppDelegate.cs" AddStandardHeader="True" src="AppDelegate.Storyboard.cs" />
+				<RawFile name="MainStoryboard_iPhone.storyboard" src="MainStoryboard.storyboard" />
+				<RawFile name="MainStoryboard_iPad.storyboard" src="IPad/MainStoryboard.storyboard" />
+				<Directory name="Resources">
+					<RawFile name="first.png" src="first.png" />
+					<RawFile name="first@2x.png" src="first-2x.png" />
+					<RawFile name="second.png" src="second.png" />
+					<RawFile name="second@2x.png" src="second-2x.png" />
+				</Directory>
+				<File name="FirstViewController.cs" AddStandardHeader="True" src="Universal/FirstViewController.Storyboard.cs" />
+				<File name="SecondViewController.cs" AddStandardHeader="True" src="Universal/SecondViewController.Storyboard.cs" />
+				<File name="FirstViewController.designer.cs" AddStandardHeader="False" DependsOn="FirstViewController.cs"
+					src="FirstViewController.designer.cs" />
+				<File name="SecondViewController.designer.cs" AddStandardHeader="False" DependsOn="SecondViewController.cs"
+					src="SecondViewController.designer.cs" />
+			</Files>
+		</Project>
+	</Combine>
+</Template>

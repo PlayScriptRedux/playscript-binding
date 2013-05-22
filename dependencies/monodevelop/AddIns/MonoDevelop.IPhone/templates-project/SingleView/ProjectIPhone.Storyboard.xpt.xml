@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<Template>
+	<TemplateConfiguration>
+		<_Name>Single View Application</_Name>
+		<_Category>C#/iOS/iPhone Storyboard</_Category>
+		<Icon>md-project-iphone</Icon>
+		<LanguageName>C#</LanguageName>
+		<_Description>Single view application project for iPhone. With storyboard support.</_Description>
+	</TemplateConfiguration>
+	
+	<Actions>
+		<Open filename = "AppDelegate.cs"/>
+	</Actions>
+	
+	<Combine name = "${ProjectName}" directory = ".">
+		<Options>
+			<StartupProject>${ProjectName}</StartupProject>
+		</Options>
+		
+		<Project name = "${ProjectName}" directory = "." type = "IPhone">
+			<Options MainNibFile="MainWindow.xib" />
+			<References>
+				<Reference type="Gac" refto="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Core, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="monotouch" />
+			</References>
+			<Files>
+				<Directory name="Resources" />
+				<File name="Info.plist" AddStandardHeader="False" src="../Common/Info_iPhone.Storyboard.plist.xml" />
+				<File name="Main.cs" AddStandardHeader="True" src="../Common/Main.cs" />
+				<File name="AppDelegate.cs" AddStandardHeader="True" src="Common/AppDelegate.Storyboard.cs" />
+				<File name="MainStoryboard.storyboard" src="IPhone/MainStoryboard.storyboard" />
+				<File name="${ProjectName}ViewController.cs" AddStandardHeader="True"
+					src="IPhone/ViewController.Storyboard.cs" />
+				<File name="${ProjectName}ViewController.designer.cs" AddStandardHeader="False"
+					DependsOn="${ProjectName}ViewController.cs"
+					src="Common/ViewController.designer.cs" />
+			</Files>
+		</Project>
+	</Combine>
+</Template>

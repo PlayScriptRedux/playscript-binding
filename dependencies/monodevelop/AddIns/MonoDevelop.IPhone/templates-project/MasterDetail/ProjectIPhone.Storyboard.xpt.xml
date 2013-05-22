@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<Template>
+	<TemplateConfiguration>
+		<_Name>Master-Detail Application</_Name>
+		<_Category>C#/iOS/iPhone Storyboard</_Category>
+		<Icon>md-project-iphone</Icon>
+		<LanguageName>C#</LanguageName>
+		<_Description>Master-detail application project for iPhone. With storyboard support.</_Description>
+	</TemplateConfiguration>
+	
+	<Actions>
+		<Open filename = "AppDelegate.cs"/>
+	</Actions>
+	
+	<Combine name = "${ProjectName}" directory = ".">
+		<Options>
+			<StartupProject>${ProjectName}</StartupProject>
+		</Options>
+		
+		<Project name = "${ProjectName}" directory = "." type = "IPhone">
+			<Options MainNibFile="MainWindow.xib" />
+			<References>
+				<Reference type="Gac" refto="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="System.Core, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+				<Reference type="Gac" refto="monotouch" />
+			</References>
+			<Files>
+				<Directory name="Resources" />
+				<File name="Info.plist" AddStandardHeader="False" src="../Common/Info_iPhone.Storyboard.plist.xml" />
+				<File name="Main.cs" AddStandardHeader="True" src="../Common/Main.cs" />
+				<File name="AppDelegate.cs" AddStandardHeader="True" src="AppDelegate.Storyboard.cs" />
+				<RawFile name="MainStoryboard.storyboard" src="MainStoryboard.storyboard" />
+				<File name="RootViewController.cs" AddStandardHeader="True" src="RootViewController.Storyboard.cs" />
+				<File name="RootViewController.designer.cs" AddStandardHeader="False" DependsOn="RootViewController.cs"
+					src="RootViewController.designer.cs" />
+				<File name="DetailViewController.cs" AddStandardHeader="True" src="DetailViewController.Storyboard.cs" />
+				<File name="DetailViewController.designer.cs" DependsOn="DetailViewController.cs" AddStandardHeader="False"
+					src="DetailViewController.Storyboard.designer.cs" />
+			</Files>
+		</Project>
+	</Combine>
+</Template>
