@@ -438,7 +438,7 @@ namespace Mono.CSharpPs
 			FieldBuilder = Parent.TypeBuilder.DefineField (Name, fixed_buffer_type, ModifiersExtensions.FieldAttr (ModFlags));
 
 			var element_spec = new FieldSpec (null, this, MemberType, ffield, ModFlags);
-			spec = new FixedFieldSpec (Parent.Definition, this, FieldBuilder, element_spec, ModFlags);
+			spec = new FixedFieldSpec (Module, Parent.Definition, this, FieldBuilder, element_spec, ModFlags);
 
 			Parent.MemberCache.AddMember (spec);
 			return true;
@@ -548,8 +548,8 @@ namespace Mono.CSharpPs
 	{
 		readonly FieldSpec element;
 
-		public FixedFieldSpec (TypeSpec declaringType, IMemberDefinition definition, FieldInfo info, FieldSpec element, Modifiers modifiers)
-			: base (declaringType, definition, element.MemberType, info, modifiers)
+		public FixedFieldSpec (ModuleContainer module, TypeSpec declaringType, IMemberDefinition definition, FieldInfo info, FieldSpec element, Modifiers modifiers)
+			: base (declaringType, definition, PointerContainer.MakeType (module, element.MemberType), info, modifiers)
 		{
 			this.element = element;
 
@@ -562,10 +562,10 @@ namespace Mono.CSharpPs
 				return element;
 			}
 		}
-
+		
 		public TypeSpec ElementType {
 			get {
-				return MemberType;
+				return element.MemberType;
 			}
 		}
 	}

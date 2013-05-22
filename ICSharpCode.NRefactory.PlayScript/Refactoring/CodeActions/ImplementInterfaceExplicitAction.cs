@@ -62,7 +62,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					state.CurrentTypeDefinition,
 					ImplementInterfaceAction.GenerateImplementation (context, toImplement.Select (t => Tuple.Create (t.Item1, true)))
 				);
-			});
+			}, type);
 		}
 	}
 }

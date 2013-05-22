@@ -1,7 +1,7 @@
---- ../playscript-monodevelop/main/src/addins/ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj	2013-04-30 17:42:44.000000000 -0700
-+++ ./ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj	2013-05-02 22:02:26.000000000 -0700
-@@ -521,10 +521,9 @@
-     <Compile Include="Parser\mcs\ps-tokenizer.cs" />
+--- ../playscript-monodevelop/main/src/addins/ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj	2013-05-21 16:14:02.000000000 -0700
++++ ./ICSharpCode.NRefactory.PlayScript/ICSharpCode.NRefactory.PlayScript.csproj	2013-05-21 21:41:33.000000000 -0700
+@@ -546,10 +546,9 @@
+     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
    </ItemGroup>
    <ItemGroup>
 -    <ProjectReference Include="..\..\..\external\nrefactory\ICSharpCode.NRefactory\ICSharpCode.NRefactory.csproj">
@@ -9,8 +9,8 @@
 -      <Name>ICSharpCode.NRefactory</Name>
 -    </ProjectReference>
 +    <Reference Include="ICSharpCode.NRefactory">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\ICSharpCode.NRefactory.dll</HintPath>
++      <HintPath>..\dependencies\monodevelop\bin\ICSharpCode.NRefactory.dll</HintPath>
 +    </Reference>
    </ItemGroup>
    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
-   <ItemGroup>
+   <ItemGroup />

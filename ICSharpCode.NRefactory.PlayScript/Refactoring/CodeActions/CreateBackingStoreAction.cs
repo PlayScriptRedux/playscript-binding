@@ -71,7 +71,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 				script.Replace (property, newProperty);
 				script.InsertBefore (property, backingStore);
 				script.Link (initializer, id1, id2);
-			});
+			}, property.NameToken);
 		}
 	}
 }

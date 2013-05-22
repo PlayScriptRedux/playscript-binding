@@ -27,6 +27,24 @@ mv ../PlayScriptBinding/PlayScriptBinding.addin.xml ../PlayScriptBinding/CSharpB
 cp ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs
 cp ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
 
+# Copy syntax mode files for PlayScript
+rm -rf ../CSharpBinding/SyntaxMode
+mkdir ../CSharpBinding/SyntaxMode
+cp ../../core/Mono.Texteditor/SyntaxModes/CSharpSyntaxMode.xml ../CSharpBinding/SyntaxMode/ActionScriptSyntaxMode.xml
+cp ../../core/Mono.Texteditor/SyntaxModes/CSharpSyntaxMode.xml ../CSharpBinding/SyntaxMode/PlayScriptSyntaxMode.xml
+
+# Change names of all the policy XML files
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsAllmanCSharpPolicy.xml        ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsGNUCSharpPolicy.xml           ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsGNUTextStylePolicy.xml        ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUTextStylePolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsInvariantTextStylePolicy.xml  ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/InvariantTextStylePolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsKRCSharpPolicy.xml            ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsMonoCSharpPolicy.xml          ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsSharpDevelopCSharpPolicy.xml  ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsWhitesmithsCSharpPolicy.xml   ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/PsMonoNameConventionPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/MonoNameConventionPolicy.xml
+
+
 # Generate patch
 find ../PlaySCriptBinding -exec touch {} \;
 pushd ../../../..
@@ -37,9 +55,23 @@ popd
 mv ../PlayScriptBinding/CSharpBinding.csproj ../PlayScriptBinding/PlayScriptBinding.csproj
 mv ../PlayScriptBinding/CSharpBinding.addin.xml ../PlayScriptBinding/PlayScriptBinding.addin.xml
 
+# Restore names for policy XML files
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/AllmanCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsAllmanCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsGNUCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUTextStylePolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsGNUTextStylePolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/InvariantTextStylePolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsInvariantTextStylePolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsKRCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsMonoCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsSharpDevelopCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsWhitesmithsCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/MonoNameConventionPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/PsMonoNameConventionPolicy.xml
+
 # Remove language binding files for PlayScript
 rm ../CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs
 rm ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
+
+# Remove syntax mode files for PlayScript
+rm -rf ../CSharpBinding/SyntaxMode
 
 # ------------  NRefactory --------------
 

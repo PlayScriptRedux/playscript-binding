@@ -49,7 +49,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 				script.Remove(block.LBraceToken);
 				script.Remove(block.RBraceToken);
 				script.FormatText(block.Parent);
-			});
+			}, block);
 		}
 		
 		static BlockStatement GetBlockStatement(RefactoringContext context)

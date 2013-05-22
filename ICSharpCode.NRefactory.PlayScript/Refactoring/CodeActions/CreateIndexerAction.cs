@@ -95,7 +95,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 				}
 
 				script.InsertWithCursor(context.TranslateString("Create indexer"), Script.InsertPosition.Before, decl);
-			});
+			}, indexer);
 		}
 
 	}

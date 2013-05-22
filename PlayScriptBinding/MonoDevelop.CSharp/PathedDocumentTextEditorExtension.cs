@@ -175,7 +175,7 @@ namespace MonoDevelop.PlayScript
 						return "add";
 					if (node.Role == CustomEventDeclaration.RemoveAccessorRole)
 						return "remove";
-					return node.GetText ();
+					return node.ToString ();
 				}
 				if (node is EntityDeclaration)
 					return ((EntityDeclaration)node).Name;

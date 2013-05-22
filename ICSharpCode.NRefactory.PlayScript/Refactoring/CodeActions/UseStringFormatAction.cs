@@ -96,7 +96,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 						format.Insert (0, '@');
 					formatLiteral.LiteralValue = format.ToString ();
 					script.Replace (expr, formatInvocation);
-				});
+				}, node);
 		}
 
 		static int IndexOf	(IList<Expression> arguments, Expression item)

@@ -44,6 +44,7 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeActions
 			this.IdString = id;
 			this.Title = title;
 			this.act = act;
+			this.DocumentRegion = new Mono.TextEditor.DocumentRegion (act.Start, act.End);
 		}
 
 		public override void Run (Document document, TextLocation loc)

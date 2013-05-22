@@ -1,4 +1,4 @@
-// 
+﻿// 
 // CSharpCompletionEngine.cs
 //  
 // Author:
@@ -282,7 +282,19 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 			if (p != null) {
 				var contextList = new CompletionDataWrapper(this);
 				var initializerResult = ResolveExpression(p);
-				if (initializerResult != null && initializerResult.Item1.Type.Kind != TypeKind.Unknown) {
+				IType initializerType = null;
+
+				if (initializerResult.Item1 is DynamicInvocationResolveResult) {
+					var dr = (DynamicInvocationResolveResult)initializerResult.Item1;
+					var constructor = (dr.Target as MethodGroupResolveResult).Methods.FirstOrDefault();
+					if (constructor != null)
+						initializerType = constructor.DeclaringType;
+				} else {
+					initializerType = initializerResult != null ? initializerResult.Item1.Type : null;
+				}
+
+
+				if (initializerType != null && initializerType.Kind != TypeKind.Unknown) {
 					// check 3 cases:
 					// 1) New initalizer { xpr
 					// 2) Object initializer { prop = val1, field = val2, xpr
@@ -302,11 +314,9 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 						return contextList.Result;
 					}
 					var lookup = new MemberLookup(ctx.CurrentTypeDefinition, Compilation.MainAssembly);
-					var initializerType = initializerResult.Item1.Type;
 					bool isProtectedAllowed = ctx.CurrentTypeDefinition != null && initializerType.GetDefinition() != null ? 
 						ctx.CurrentTypeDefinition.IsDerivedFrom(initializerType.GetDefinition()) : 
 							false;
-
 					foreach (var m in initializerType.GetMembers (m => m.EntityType == EntityType.Field)) {
 						var f = m as IField;
 						if (f != null && (f.IsReadOnly || f.IsConst))
@@ -1083,6 +1093,19 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 				}
 				return DefaultControlSpaceItems();
 			}
+
+			var attribute = syntaxTree.GetNodeAt<Attribute>(location);
+			if (attribute != null) {
+				var contextList = new CompletionDataWrapper(this);
+				var astResolver = CompletionContextProvider.GetResolver(GetState (), syntaxTree);
+				var csResolver = astResolver.GetResolverStateBefore(attribute);
+				AddContextCompletion(
+					contextList,
+					csResolver,
+					attribute
+				);
+				return contextList.Result;
+			}
 			return null;
 		}
 		
@@ -1359,6 +1382,8 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 			if (!(node is AstType)) {
 				if (currentMember != null || node is Expression) {
 					AddKeywords(wrapper, statementStartKeywords);
+					if (LanguageVersion.Major >= 5) 
+						AddKeywords(wrapper, new [] { "await" });
 					AddKeywords(wrapper, expressionLevelKeywords);
 					if (node == null || node is TypeDeclaration)
 						AddKeywords(wrapper, typeLevelKeywords);
@@ -1670,6 +1695,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 						null,
 						t => t.GetDefinition() == null || def == null || t.GetDefinition().IsDerivedFrom(def) ? t : null,
 						m => false);
+					AddKeywords(isAsWrapper, primitiveTypesKeywords);
 					return isAsWrapper.Result;
 					//					{
 					//						CompletionDataList completionList = new ProjectDomCompletionDataList ();
@@ -1813,6 +1839,8 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 					var inList = new CompletionDataWrapper(this);
 					
 					var expr = GetExpressionAtCursor();
+					if (expr == null)
+						return null;
 					var rr = ResolveExpression(expr);
 					
 					AddContextCompletion(
@@ -2134,6 +2162,8 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 		
 		bool MatchDelegate(IType delegateType, IMethod method)
 		{
+			if (method.EntityType != EntityType.Method)
+				return false;
 			var delegateMethod = delegateType.GetDelegateInvokeMethod();
 			if (delegateMethod == null || delegateMethod.Parameters.Count != method.Parameters.Count) {
 				return false;
@@ -2162,6 +2192,13 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 					"Creates anonymous delegate.",
 					"delegate {" + EolMarker + thisLineIndent + IndentString + "|" + delegateEndString
 					);
+				if (LanguageVersion.Major >= 5) {
+					completionList.AddCustom(
+						"async delegate",
+						"Creates anonymous async delegate.",
+						"async delegate {" + EolMarker + thisLineIndent + IndentString + "|" + delegateEndString
+						);
+				}
 			}
 			var sb = new StringBuilder("(");
 			var sbWithoutTypes = new StringBuilder("(");
@@ -2186,14 +2223,27 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 				"delegate" + sb,
 				"Creates anonymous delegate.",
 				"delegate" + sb + " {" + EolMarker + thisLineIndent + IndentString + "|" + delegateEndString
+			);
+			if (LanguageVersion.Major >= 5) {
+				completionList.AddCustom(
+					"async delegate" + sb,
+					"Creates anonymous async delegate.",
+					"async delegate" + sb + " {" + EolMarker + thisLineIndent + IndentString + "|" + delegateEndString
 				);
-
+			}
 			if (!completionList.Result.Any(data => data.DisplayText == sb.ToString())) {
 				completionList.AddCustom(
 					sb.ToString(),
 					"Creates typed lambda expression.",
 					sb + " => |" + (addSemicolon ? ";" : "")
 					);
+				if (LanguageVersion.Major >= 5) {
+					completionList.AddCustom(
+						"async " + sb.ToString(),
+						"Creates typed async lambda expression.",
+						"async " + sb + " => |" + (addSemicolon ? ";" : "")
+					);
+				}
 			}
 
 			if (!delegateMethod.Parameters.Any(p => p.IsOut || p.IsRef) && !completionList.Result.Any(data => data.DisplayText == sbWithoutTypes.ToString())) {
@@ -2201,7 +2251,14 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 					sbWithoutTypes.ToString(),
 					"Creates lambda expression.",
 					sbWithoutTypes + " => |" + (addSemicolon ? ";" : "")
+				);
+				if (LanguageVersion.Major >= 5) {
+					completionList.AddCustom(
+						"async " + sbWithoutTypes.ToString(),
+						"Creates async lambda expression.",
+						"async " + sbWithoutTypes + " => |" + (addSemicolon ? ";" : "")
 					);
+				}
 			}
 			/* TODO:Make factory method out of it.
 			// It's  needed to temporarly disable inserting auto matching bracket because the anonymous delegates are selectable with '('
@@ -3221,7 +3278,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Completion
 			"unchecked", "const", "continue", "do", "finally", "fixed", "for", "foreach",
 			"goto", "if", "lock", "return", "stackalloc", "switch", "throw", "try", "unsafe", 
 			"using", "while", "yield",
-			"catch", "await"
+			"catch"
 		};
 		static string[] globalLevelKeywords = new string [] {
 			"package", "import", "use", "extern", "public", "internal", 

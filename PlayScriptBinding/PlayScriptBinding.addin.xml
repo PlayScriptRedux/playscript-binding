@@ -6,14 +6,13 @@
        url         = "http://www.monodevelop.com/"
        description = "PlayScript Language Binding"
        category    = "Language bindings"
-       version     = "4.0.3">
+       version     = "4.0.5">
 	
 	<Dependencies>
-		<Addin id="Core" version="4.0.3"/>
-		<Addin id="Ide" version="4.0.3"/>
-		<Addin id="SourceEditor2" version="4.0.3"/>
-		<Addin id="Refactoring" version="4.0.3"/>
-+ 		<Addin id="CSharpBinding" version="4.0.3"/>	
+		<Addin id="Core" version="4.0.5"/>
+		<Addin id="Ide" version="4.0.5"/>
+		<Addin id="SourceEditor2" version="4.0.5"/>
+		<Addin id="Refactoring" version="4.0.5"/>
 	</Dependencies>
 
 	<ConditionType id="MSBuildTargetIsAvailable" type="MonoDevelop.Projects.Formats.MSBuild.TargetsAvailableCondition" />
@@ -176,45 +175,44 @@
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets/Mono" >
-		<Policies resource="MonoCSharpPolicy.xml" />
-		<Policies resource="MonoNameConventionPolicy.xml" />
+		<Policies resource="PsMonoNameConventionPolicy.xml" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets" >
 		<PolicySet id="KR" _name="K&amp;R style" allowDiffSerialize="false">
-			<Policies resource="KRCSharpPolicy.xml" />
-			<Policies resource="InvariantTextStylePolicy.xml" />
+			<Policies resource="PsKRCSharpPolicy.xml" />
+			<Policies resource="PsInvariantTextStylePolicy.xml" />
 		</PolicySet>
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets" >
 		<PolicySet id="1TBS" _name="SharpDevelop style (1TBS)" allowDiffSerialize="false">
-			<Policies resource="SharpDevelopCSharpPolicy.xml" />
-			<Policies resource="InvariantTextStylePolicy.xml" />
+			<Policies resource="PsSharpDevelopCSharpPolicy.xml" />
+			<Policies resource="PsInvariantTextStylePolicy.xml" />
 		</PolicySet>
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets/VisualStudio" >
-		<Policies resource="AllmanCSharpPolicy.xml" />
+		<Policies resource="PsAllmanCSharpPolicy.xml" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets" >
 		<PolicySet id="Whitesmiths" _name="Whitesmiths style" allowDiffSerialize="false">
-			<Policies resource="WhitesmithsCSharpPolicy.xml" />
-			<Policies resource="InvariantTextStylePolicy.xml" />
+			<Policies resource="PsWhitesmithsCSharpPolicy.xml" />
+			<Policies resource="PsInvariantTextStylePolicy.xml" />
 		</PolicySet>
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/PolicySets" >
 		<PolicySet id="GNU" _name="GNU style" allowDiffSerialize="false">
-			<Policies resource="GNUCSharpPolicy.xml" />
-			<Policies resource="GNUTextStylePolicy.xml" />
+			<Policies resource="PsGNUCSharpPolicy.xml" />
+			<Policies resource="PsGNUTextStylePolicy.xml" />
 		</PolicySet>
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/Gui/MimeTypePolicyPanels">
-		<Panel id = "CSharpFormatting" _label = "ActionScript Format" mimeType="text/x-actionscript" class = "MonoDevelop.PlayScript.Formatting.CSharpFormattingPolicyPanel" />
-		<Panel id = "CSharpFormatting" _label = "PlayScript Format" mimeType="text/x-playscript" class = "MonoDevelop.PlayScript.Formatting.CSharpFormattingPolicyPanel" />		
+		<Panel id = "ActionScriptFormatting" _label = "ActionScript Format" mimeType="text/x-actionscript" class = "MonoDevelop.PlayScript.Formatting.CSharpFormattingPolicyPanel" />
+		<Panel id = "PlayScriptFormatting" _label = "PlayScript Format" mimeType="text/x-playscript" class = "MonoDevelop.PlayScript.Formatting.CSharpFormattingPolicyPanel" />		
 	</Extension>
 
 	<!-- Extension path = "/MonoDevelop/Refactoring/CodeActions">
@@ -280,13 +278,13 @@
 	</Extension>
 
 	<Extension path = "/MonoDevelop/ProjectModel/Gui/DefaultPolicyPanels/SourceCode">
-		<Section id="NameConventions" _label="Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
+		<Section id="PlayScriptNameConventions" _label="PlayScript Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
 	</Extension>
 	<Extension path = "/MonoDevelop/ProjectModel/Gui/ItemOptionPanels/SourceCode">
-		<Section id="NameConventions" _label="Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
+		<Section id="PlayScriptNameConventions" _label="PlayScript Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
 	</Extension>
 	<Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog/SourceCode">
-		<Section id="NameConventions" _label="Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
+		<Section id="PlayScriptNameConventions" _label="PlayScript Name Conventions" fill = "true" class="MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanel" />
 	</Extension>
 
 	<Extension path = "/MonoDevelop/SourceEditor2/TooltipProviders">
@@ -298,7 +296,7 @@
 	        <Import assembly="MonoDevelop.PlayScriptBinding.Autotools.dll"/>
 	    </Runtime>
 		<Dependencies>
-			<Addin id="Autotools" version="4.0.3"/>
+			<Addin id="Autotools" version="4.0.5"/>
 		</Dependencies>
 		<Extension path = "/MonoDevelop/Autotools/SimpleSetups">
 			<Class class="CSharpBinding.Autotools.CSharpAutotoolsSetup" />
@@ -310,7 +308,7 @@
 			<Import assembly="MonoDevelop.CSharpBinding.AspNet.dll"/>
 		</Runtime>
 		<Dependencies>
-			<Addin id="AspNet" version="4.0.3"/>
+			<Addin id="AspNet" version="4.0.5"/>
 		</Dependencies>
 		<Extension path = "/MonoDevelop/Asp/CompletionBuilders">
 			<Class class = "MonoDevelop.CSharp.Completion.AspLanguageBuilder" />

@@ -72,7 +72,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 				});
 				
 				script.Replace(switchStatement, newSwitch);
-			});
+			}, switchStatement);
 		}
 		
 		static SwitchStatement GetSwitchStatement (RefactoringContext context)

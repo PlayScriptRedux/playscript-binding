@@ -39,7 +39,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					script => {
 						var expr = new BinaryOperatorExpression (node.Left.Clone (), newOp, node.Right.Clone ());
 						script.Replace (node, expr);
-					});
+					}, node.OperatorToken);
 			}
 			return null;
 		}

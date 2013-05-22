@@ -37,47 +37,58 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoDevelop.Core">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\MonoDevelop.Core.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\MonoDevelop.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoDevelop.Ide">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\MonoDevelop.Ide.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\MonoDevelop.Ide.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mono.TextEditor">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\Mono.TextEditor.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\Mono.TextEditor.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoDevelop.Debugger">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\AddIns\MonoDevelop.Debugger\MonoDevelop.Debugger.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\AddIns\MonoDevelop.Debugger\MonoDevelop.Debugger.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mono.Debugging">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\Mono.Debugging.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\Mono.Debugging.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoDevelop.DesignerSupport">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\AddIns\MonoDevelop.DesignerSupport\MonoDevelop.DesignerSupport.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoDevelop.SourceEditor2">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\AddIns\DisplayBindings\SourceEditor\MonoDevelop.SourceEditor2.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\AddIns\MonoDevelop.DesignerSupport\MonoDevelop.DesignerSupport.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MonoDevelop.Refactoring">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\AddIns\MonoDevelop.Refactoring\MonoDevelop.Refactoring.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\AddIns\MonoDevelop.Refactoring\MonoDevelop.Refactoring.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ICSharpCode.Decompiler">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\ICSharpCode.Decompiler.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\ICSharpCode.Decompiler.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mono.Cecil">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\Mono.Cecil.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\ICSharpCode.NRefactory.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\ICSharpCode.NRefactory.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mono.Addins">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\Mono.Addins.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\Mono.Addins.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <ProjectReference Include="..\ICSharpCode.NRefactory.PlayScript\ICSharpCode.NRefactory.PlayScript.csproj">
-      <Project>{6587E3E6-B14F-4924-B39D-512A78C4C1B2}</Project>
-      <Name>ICSharpCode.NRefactory.PlayScript</Name>
-    </ProjectReference>
     <Reference Include="ICSharpCode.NRefactory.CSharp">
-      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\ICSharpCode.NRefactory.CSharp.dll</HintPath>
+      <HintPath>..\dependencies\monodevelop\bin\ICSharpCode.NRefactory.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoDevelop.SourceEditor2">
+      <HintPath>..\dependencies\monodevelop\AddIns\DisplayBindings\SourceEditor\MonoDevelop.SourceEditor2.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory.PlayScript">
+      <HintPath>..\ICSharpCode.NRefactory.PlayScript\obj\Debug\ICSharpCode.NRefactory.PlayScript.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -145,35 +156,32 @@
     <EmbeddedResource Include="icons\playscript-project-16.png">
       <LogicalName>playscript-project-16.png</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\CSharpFormattingPolicy.xml">
-      <LogicalName>CSharpFormattingPolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\PsAllmanCSharpPolicy.xml">
+      <LogicalName>PsAllmanCSharpPolicy.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\AllmanCSharpPolicy.xml">
-      <LogicalName>AllmanCSharpPolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\PsInvariantTextStylePolicy.xml">
+      <LogicalName>PsInvariantTextStylePolicy.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\InvariantTextStylePolicy.xml">
-      <LogicalName>InvariantTextStylePolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\PsKRCSharpPolicy.xml">
+      <LogicalName>PsKRCSharpPolicy.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\KRCSharpPolicy.xml">
-      <LogicalName>KRCSharpPolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\PsMonoCSharpPolicy.xml">
+      <LogicalName>PsMonoCSharpPolicy.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\MonoCSharpPolicy.xml">
-      <LogicalName>MonoCSharpPolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\PsSharpDevelopCSharpPolicy.xml">
+      <LogicalName>PsSharpDevelopCSharpPolicy.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\SharpDevelopCSharpPolicy.xml">
-      <LogicalName>SharpDevelopCSharpPolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\PsWhitesmithsCSharpPolicy.xml">
+      <LogicalName>PsWhitesmithsCSharpPolicy.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\WhitesmithsCSharpPolicy.xml">
-      <LogicalName>WhitesmithsCSharpPolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\PsGNUCSharpPolicy.xml">
+      <LogicalName>PsGNUCSharpPolicy.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\GNUCSharpPolicy.xml">
-      <LogicalName>GNUCSharpPolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\PsGNUTextStylePolicy.xml">
+      <LogicalName>PsGNUTextStylePolicy.xml</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Formatting\policies\GNUTextStylePolicy.xml">
-      <LogicalName>GNUTextStylePolicy.xml</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MonoDevelop.CSharp.Refactoring.CodeIssues\NamingInspection\MonoNameConventionPolicy.xml">
-      <LogicalName>MonoNameConventionPolicy.xml</LogicalName>
+    <EmbeddedResource Include="MonoDevelop.CSharp.Refactoring.CodeIssues\NamingInspection\PsMonoNameConventionPolicy.xml">
+      <LogicalName>PsMonoNameConventionPolicy.xml</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="templates\AsConsoleProject.xpt.xml">
       <LogicalName>AsConsoleProject.xpt.xml</LogicalName>
@@ -224,7 +232,6 @@
     <Compile Include="MonoDevelop.CSharp.Project\CompilerOptionsPanelWidget.cs" />
     <Compile Include="MonoDevelop.CSharp\CSharpBindingCompilerManager.cs" />
     <Compile Include="MonoDevelop.CSharp\CSharpEnhancedCodeProvider.cs" />
-    <Compile Include="MonoDevelop.CSharp\CSharpLanguageBinding.cs" />
     <Compile Include="MonoDevelop.CSharp.Resolver\TextEditorResolverProvider.cs" />
     <Compile Include="MonoDevelop.CSharp.Formatting\Indent.cs" />
     <Compile Include="MonoDevelop.CSharp.Formatting\OnTheFlyFormatter.cs" />
@@ -253,7 +260,6 @@
     <Compile Include="MonoDevelop.CSharp.Completion\IndexerParameterDataProvider.cs" />
     <Compile Include="MonoDevelop.CSharp.Refactoring\HelperMethods.cs" />
     <Compile Include="MonoDevelop.CSharp.Parser\CSharpFoldingParser.cs" />
-    <Compile Include="MonoDevelop.CSharp.Completion\TemplateParameterDataProvider.cs" />
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\AbstractGenerateAction.cs" />
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\CodeGenerationCommands.cs" />
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\CodeGenerationOptions.cs" />
@@ -290,8 +296,7 @@
     <Compile Include="MonoDevelop.CSharp\SignatureMarkupCreator.cs" />
     <Compile Include="MonoDevelop.CSharp.Completion\ArrayTypeParameterDataProvider.cs" />
     <Compile Include="MonoDevelop.CSharp.CodeGeneration\ImplementInterfaceMembersGenerator.cs" />
-    <Compile Include="MonoDevelop.CSharp\ActionScriptLanguageBinding.cs" />
-    <Compile Include="MonoDevelop.CSharp\PlayScriptLanguageBinding.cs" />
+    <Compile Include="MonoDevelop.CSharp.Completion\TypeParameterDataProvider.cs" />
     <Compile Include="gtk-gui\MonoDevelop.PlayScript.Project.CodeGenerationPanelWidget.cs" />
     <Compile Include="gtk-gui\MonoDevelop.PlayScript.Project.CompilerOptionsPanelWidget.cs" />
     <Compile Include="gtk-gui\MonoDevelop.PlayScript.Formatting.CSharpFormattingPolicyPanelWidget.cs" />
@@ -300,6 +305,9 @@
     <Compile Include="gtk-gui\MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPanelWidget.cs" />
     <Compile Include="gtk-gui\MonoDevelop.PlayScript.CodeGeneration.GenerateCodeWindow.cs" />
     <Compile Include="gtk-gui\MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionEditRuleDialog.cs" />
+    <Compile Include="MonoDevelop.CSharp.Refactoring\ExtensionMethods.cs" />
+    <Compile Include="MonoDevelop.CSharp\ActionScriptLanguageBinding.cs" />
+    <Compile Include="MonoDevelop.CSharp\PlayScriptLanguageBinding.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile.am" />

@@ -66,7 +66,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 				} else {
 					script.InsertBefore(statement, decl);
 				}
-			});
+			}, identifier);
 		}
 	}
 }

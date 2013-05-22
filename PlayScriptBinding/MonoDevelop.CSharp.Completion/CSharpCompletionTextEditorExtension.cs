@@ -114,7 +114,7 @@ namespace MonoDevelop.PlayScript.Completion
 		public PlayScriptFormattingPolicy FormattingPolicy {
 			get {
 				if (policy == null) {
-					IEnumerable<string> types = MonoDevelop.Ide.DesktopService.GetMimeTypeInheritanceChain (CSharpFormatter.MimeType);
+					IEnumerable<string> types = MonoDevelop.Ide.DesktopService.GetMimeTypeInheritanceChain (MonoDevelop.PlayScript.Formatting.CSharpFormatter.MimeType);
 					if (Document.Project != null && Document.Project.Policies != null) {
 						policy = base.Document.Project.Policies.Get<PlayScriptFormattingPolicy> (types);
 					} else {
@@ -276,6 +276,14 @@ namespace MonoDevelop.PlayScript.Completion
 				Document.GetProjectContext (),
 				ctx
 			);
+
+			if (Document.HasProject) {
+				var configuration = Document.Project.GetConfiguration (MonoDevelop.Ide.IdeApp.Workspace.ActiveConfiguration) as DotNetProjectConfiguration;
+				var par = configuration != null ? configuration.CompilationParameters as PlayScriptCompilerParameters : null;
+				if (par != null)
+					engine.LanguageVersion = MonoDevelop.PlayScript.Parser.TypeSystemParser.ConvertLanguageVersion (par.LangVersion);
+			}
+
 			engine.FormattingPolicy = FormattingPolicy.CreateOptions ();
 			engine.EolMarker = data.EolMarker;
 			engine.IndentString = data.Options.IndentationString;
@@ -619,9 +627,21 @@ namespace MonoDevelop.PlayScript.Completion
 
 				#region IListData implementation
 
+				CSharpCompletionDataList list;
 				public CSharpCompletionDataList List {
-					get;
-					set;
+					get {
+						return list;
+					}
+					set {
+						list = value;
+						if (overloads != null) {
+							foreach (var overload in overloads.Skip (1)) {
+								var ld = overload as IListData;
+								if (ld != null)
+									ld.List = list;
+							}
+						}
+					}
 				}
 
 				#endregion
@@ -700,7 +720,7 @@ namespace MonoDevelop.PlayScript.Completion
 				CSharpCompletionTextEditorExtension ext;
 				CSharpUnresolvedFile file;
 				ICompilation compilation;
-				CSharpResolver resolver;
+//				CSharpResolver resolver;
 
 				string IdString {
 					get {
@@ -708,14 +728,13 @@ namespace MonoDevelop.PlayScript.Completion
 					}
 				}
 
-				#region IListData implementation
-
-				public CSharpCompletionDataList List {
-					get;
-					set;
+				public override string CompletionText {
+					get {
+						if (type.TypeParameterCount > 0 && !type.IsParameterized)
+							return type.Name;
+						return base.CompletionText;
+					}
 				}
-
-				#endregion
 
 				public override TooltipInformation CreateTooltipInformation (bool smartWrap)
 				{
@@ -727,9 +746,9 @@ namespace MonoDevelop.PlayScript.Completion
 						for (int i = 0; i < ConflictingTypes.Count; i++) {
 							var ct = ConflictingTypes[i];
 							if (i > 0)
-								conflicts.Append (", ");
-							if ((i + 1) % 5 == 0)
-								conflicts.Append (Environment.NewLine + "\t");
+								conflicts.AppendLine (",");
+//							if ((i + 1) % 5 == 0)
+//								conflicts.Append (Environment.NewLine + "\t");
 							conflicts.Append (sig.GetTypeReferenceString (((TypeCompletionData)ct).type));
 						}
 						result.AddCategory ("Type Conflicts", conflicts.ToString ());
@@ -754,18 +773,18 @@ namespace MonoDevelop.PlayScript.Completion
 					if (overloads == null)
 						addedDatas [IdString] = this;
 
-					string id = IdString;
-					ICompletionData oldData;
-					if (addedDatas.TryGetValue (id, out oldData)) {
-						var old = (TypeCompletionData)oldData;
-						if (old.ConflictingTypes == null)
-							old.ConflictingTypes = new List<ICompletionData> ();
-						old.ConflictingTypes.Add (data);
-						return;
-
+					if (data is TypeCompletionData) {
+						string id = ((TypeCompletionData)data).IdString;
+						ICompletionData oldData;
+						if (addedDatas.TryGetValue (id, out oldData)) {
+							var old = (TypeCompletionData)oldData;
+							if (old.ConflictingTypes == null)
+								old.ConflictingTypes = new List<ICompletionData> ();
+							old.ConflictingTypes.Add (data);
+							return;
+						}
+						addedDatas [id] = data;
 					}
-					addedDatas[id] = data;
-
 
 					base.AddOverload (data);
 				}
@@ -780,7 +799,7 @@ namespace MonoDevelop.PlayScript.Completion
 			ICompletionData ICompletionDataFactory.CreateTypeCompletionData (IType type, bool showFullName, bool isInAttributeContext)
 			{
 				Lazy<string> displayText = new Lazy<string> (delegate {
-					string name = showFullName ? builder.ConvertType(type).GetText() : type.Name; 
+					string name = showFullName ? builder.ConvertType(type).ToString() : type.Name; 
 					if (isInAttributeContext && name.EndsWith("Attribute") && name.Length > "Attribute".Length) {
 						name = name.Substring(0, name.Length - "Attribute".Length);
 					}
@@ -796,7 +815,7 @@ namespace MonoDevelop.PlayScript.Completion
 			ICompletionData ICompletionDataFactory.CreateMemberCompletionData(IType type, IEntity member)
 			{
 				Lazy<string> displayText = new Lazy<string> (delegate {
-					string name = builder.ConvertType(type).GetText(); 
+					string name = builder.ConvertType(type).ToString(); 
 					return name + "."+ member.Name;
 				});
 
@@ -906,7 +925,12 @@ namespace MonoDevelop.PlayScript.Completion
 		
 		IParameterDataProvider IParameterCompletionDataFactory.CreateTypeParameterDataProvider (int startOffset, IEnumerable<IType> types)
 		{
-			return new TemplateParameterDataProvider (startOffset, this, types);
+			return new TypeParameterDataProvider (startOffset, this, types);
+		}
+
+		IParameterDataProvider IParameterCompletionDataFactory.CreateTypeParameterDataProvider (int startOffset, IEnumerable<IMethod> methods)
+		{
+			return new TypeParameterDataProvider (startOffset, this, methods);
 		}
 		#endregion
 		
@@ -978,11 +1002,15 @@ namespace MonoDevelop.PlayScript.Completion
 			static void AddType (MonoDevelop.Ide.Gui.Document document, TypeSystemSegmentTree result, IUnresolvedTypeDefinition type)
 			{
 				int offset = document.Editor.LocationToOffset (type.Region.Begin);
-				int endOffset = document.Editor.LocationToOffset (type.Region.End);
+				int endOffset = type.Region.End.IsEmpty ? int.MaxValue : document.Editor.LocationToOffset (type.Region.End);
+				if (endOffset < 0)
+					endOffset = int.MaxValue;
 				result.Add (new TypeSystemTreeSegment (offset, endOffset - offset, type));
 				foreach (var entity in type.Members) {
 					offset = document.Editor.LocationToOffset (entity.Region.Begin);
 					endOffset = document.Editor.LocationToOffset (entity.Region.End);
+					if (endOffset < 0)
+						endOffset = int.MaxValue;
 					result.Add (new TypeSystemTreeSegment (offset, endOffset - offset, entity));
 				}
 				
@@ -1022,7 +1050,7 @@ namespace MonoDevelop.PlayScript.Completion
 					--startOffset;
 				}
 
-				return Tuple.Create (document.Editor.GetTextAt (startOffset, caretOffset - startOffset), 
+				return Tuple.Create (caretOffset > startOffset ? document.Editor.GetTextAt (startOffset, caretOffset - startOffset) : "", 
 				                     (TextLocation)document.Editor.OffsetToLocation (startOffset));
 			}
 

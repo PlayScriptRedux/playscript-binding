@@ -87,7 +87,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					foreach (var singleDecl in declList)
 						script.InsertBefore (decl, singleDecl);
 					script.Remove (decl);
-				});
+				}, decl);
 		}
 	}
 }

@@ -57,7 +57,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					} else {
 						script.Replace (node, asExpr);
 					}
-				});
+				}, node);
 			}
 			return null;
 		}

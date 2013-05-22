@@ -50,7 +50,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 
 			yield return new CodeAction(context.TranslateString("Create delegate"), script => {
 				script.CreateNewType(CreateType(context,  node));
-			});
+			}, node);
 
 		}
 

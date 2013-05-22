@@ -31,7 +31,7 @@ using MonoDevelop.Ide.TypeSystem;
 
 namespace MonoDevelop.PlayScript.Completion
 {
-	public class VariableCompletionData : CompletionData, IVariableCompletionData
+	class VariableCompletionData : CompletionData, IVariableCompletionData
 	{
 		readonly CSharpCompletionTextEditorExtension ext;
 

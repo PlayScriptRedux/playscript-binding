@@ -49,7 +49,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 				} else {
 					script.Replace(foreachStmt.VariableType, new SimpleType ("var"));
 				}
-			});
+			}, (AstNode)varDecl ?? foreachStmt);
 		}
 		
 		static readonly AstType varType = new SimpleType ("var");

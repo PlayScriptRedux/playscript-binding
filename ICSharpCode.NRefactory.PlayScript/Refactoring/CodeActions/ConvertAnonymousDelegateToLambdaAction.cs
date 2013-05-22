@@ -53,7 +53,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					}
 				}
 				script.Replace(node, lambda);
-			});
+			}, node);
 		}
 		#endregion
 	}

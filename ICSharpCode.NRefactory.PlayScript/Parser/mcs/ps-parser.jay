@@ -2153,7 +2153,7 @@ parameter_modifier
 	;
 
 parameter_array
-	: opt_attributes DOTDOTDOT IDENTIFIER
+	: opt_attributes DOTDOTDOT IDENTIFIER opt_arglist_type
 	  {
 		var lt = (Tokenizer.LocatedToken) $3;
 		var type = new ComposedCast (
@@ -2178,6 +2178,16 @@ parameter_array
 		Error_SyntaxError (yyToken);
 		
 		$$ = new ParamsParameter ((FullNamedExpression) $3, null, (Attributes) $1, Location.Null);
+	  }
+	;
+	
+opt_arglist_type
+	: /* empty */
+	| COLON IDENTIFIER
+	  {
+		var lt = (Tokenizer.LocatedToken) $2;
+	    if (lt.Value != "Array")
+			report.Error (7353, GetLocation ($2), "Argument type for variable argument must be Array");	    	
 	  }
 	;
 	
@@ -2468,7 +2478,7 @@ interface_declaration
 		push_current_container (new Interface (current_container, (MemberName) $6, (Modifiers) $2, (Attributes) $1), is_partial);
 		lbag.AddMember (current_container, GetModifierLocations (), GetLocation ($4));		
 	  }
-	  opt_class_extends
+	  opt_interface_extends
 	  opt_class_implements
 	  opt_type_parameter_constraints_clauses
 	  {
@@ -2589,7 +2599,7 @@ operator_declaration
 
 				lbag.AddMember (op, GetModifierLocations (), lbag.GetLocations (decl));
 				if ($5 == null) { // Semicolon
-					lbag.AppendTo (op, savedLocation);
+					lbag.AddLocation (op, savedLocation); 
 				}
 			}
 		}
@@ -5759,6 +5769,20 @@ opt_class_extends
 	  }
 	;
 	
+opt_interface_extends
+	: /* empty */
+	| EXTENDS type_list
+	 {
+		current_type.AddBasesForPart ((List<FullNamedExpression>) $2);
+	 }
+	| EXTENDS type_list error
+	  {
+		Error_SyntaxError (yyToken);
+
+		current_type.AddBasesForPart ((List<FullNamedExpression>) $2);
+	  }
+	;
+		
 opt_class_implements
 	: /* empty */
 	| IMPLEMENTS type_list
@@ -6516,7 +6540,7 @@ switch_statement
 	  }
 	  opt_switch_sections CLOSE_BRACE
 	  {
-		$$ = new Switch ((Expression) $3, (ExplicitBlock) current_block.Explicit, (List<SwitchSection>) $7, GetLocation ($1));	
+		$$ = new Switch ((Expression) $3, (ExplicitBlock) current_block.Explicit, GetLocation ($1));	
 		end_block (GetLocation ($8));
 		lbag.AddStatement ($$, GetLocation ($2), GetLocation ($4), GetLocation ($5), GetLocation ($8));
 	  }
@@ -6524,7 +6548,7 @@ switch_statement
 	  {
 		Error_SyntaxError (yyToken);
 	  
-		$$ = new Switch ((Expression) $3, null, null, GetLocation ($1));	
+		$$ = new Switch ((Expression) $3, null, GetLocation ($1));	
 		lbag.AddStatement ($$, GetLocation ($2));
 	  }
 	;
@@ -6533,58 +6557,33 @@ opt_switch_sections
 	: /* empty */ 		
       {
 		report.Warning (1522, 1, current_block.StartLocation, "Empty switch block"); 
-		$$ = new List<SwitchSection> ();
 	  }
 	| switch_sections
 	;
 
 switch_sections
 	: switch_section 
-	  {
-		var sections = new List<SwitchSection> (4);
-
-		sections.Add ((SwitchSection) $1);
-		$$ = sections;
-	  }
 	| switch_sections switch_section
-	  {
-		var sections = (List<SwitchSection>) $1;
-
-		sections.Add ((SwitchSection) $2);
-		$$ = sections;
-	  }
 	| error
 	  {
 		Error_SyntaxError (yyToken);
-		$$ = new List<SwitchSection> ();
 	  } 
 	;
 
 switch_section
-	: switch_labels
-	  {
-		current_block = current_block.CreateSwitchBlock (lexer.Location);
-	  }
- 	  statement_list 
-	  {
-		$$ = new SwitchSection ((List<SwitchLabel>) $1, current_block);
-	  }
+	: switch_labels statement_list 
 	;
 
 switch_labels
 	: switch_label 
 	  {
-		var labels = new List<SwitchLabel> (2);
-
-		labels.Add ((SwitchLabel) $1);
-		$$ = labels;
+	  	var label = (SwitchLabel) $1;
+	  	label.SectionStart = true;
+		current_block.AddStatement (label);
 	  }
 	| switch_labels switch_label 
 	  {
-		var labels = (List<SwitchLabel>) ($1);
-		labels.Add ((SwitchLabel) $2);
-
-		$$ = labels;
+		current_block.AddStatement ((Statement) $2);
 	  }
 	;
 
@@ -6860,7 +6859,7 @@ statement_expression_list
 			lbag.AddStatement (sl, GetLocation ($2));
 	  	} else {
 	  		sl.Add ((Statement) $3);
-	  		lbag.AppendTo (sl, GetLocation ($2));
+	  		lbag.AddLocation (sl, GetLocation ($2));
 	  	}
 	  		
 		$$ = sl;
@@ -7296,7 +7295,7 @@ using_or_fixed_variable_initializer
 	| ASSIGN variable_initializer
 	  {
 		current_variable.Initializer = (Expression) $2;
-		lbag.AppendTo (current_variable, GetLocation ($1));
+		lbag.AddLocation (current_variable, GetLocation ($1));
 		$$ = current_variable;
 	  }
 	;

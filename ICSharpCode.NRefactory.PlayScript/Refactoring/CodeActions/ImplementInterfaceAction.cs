@@ -58,7 +58,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					state.CurrentTypeDefinition,
 					GenerateImplementation(context, toImplement)
 				);
-			});
+			}, type);
 		}
 		
 		public static IEnumerable<AstNode> GenerateImplementation(RefactoringContext context, IEnumerable<Tuple<IMember, bool>> toImplement)

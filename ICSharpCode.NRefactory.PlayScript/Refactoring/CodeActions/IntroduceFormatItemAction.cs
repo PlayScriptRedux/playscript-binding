@@ -74,7 +74,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 			
 				script.Replace(pexpr, newInvocation);
 				script.Select(arg);
-			});
+			}, pexpr);
 
 		}
 		

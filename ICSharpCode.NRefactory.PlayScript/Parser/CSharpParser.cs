@@ -283,6 +283,8 @@ namespace ICSharpCode.NRefactory.PlayScript
 					
 					if (attr.PositionalArguments != null) {
 						foreach (var arg in attr.PositionalArguments) {
+							if (arg == null)
+								continue;
 							var na = arg as NamedArgument;
 							if (na != null) {
 								var newArg = new NamedArgumentExpression ();
@@ -326,6 +328,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 			
 			AttributeSection ConvertAttributeSection (IEnumerable<Mono.CSharpPs.Attribute> optAttributes)
 			{
+
 				if (optAttributes == null)
 					return null;
 				AttributeSection result = new AttributeSection ();
@@ -333,7 +336,6 @@ namespace ICSharpCode.NRefactory.PlayScript
 				int pos = 0;
 				if (loc != null)
 					result.AddChild (new CSharpTokenNode (Convert (loc [pos++]), Roles.LBracket), Roles.LBracket);
-				
 				var first = optAttributes.FirstOrDefault ();
 				string target = first != null ? first.ExplicitTarget : null;
 				
@@ -350,6 +352,9 @@ namespace ICSharpCode.NRefactory.PlayScript
 				int attributeCount = 0;
 				foreach (var attr in GetAttributes (optAttributes)) {
 					result.AddChild (attr, Roles.Attribute);
+					if (loc != null && pos + 1 < loc.Count)
+						result.AddChild (new CSharpTokenNode (Convert (loc [pos++]), Roles.Comma), Roles.Comma);
+
 					attributeCount++;
 				}
 				// Left and right bracket + commas between the attributes
@@ -507,7 +512,6 @@ namespace ICSharpCode.NRefactory.PlayScript
 				var newType = new TypeDeclaration ();
 				newType.ClassType = ClassType.Class;
 				AddAttributeSection(newType, c);
-				
 				var location = LocationsBag.GetMemberLocation(c);
 				AddModifiers(newType, location);
 				int curLoc = 0;
@@ -538,7 +542,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 				typeStack.Push (newType);
 				base.Visit (c);
 				AddAttributeSection (newType, c.UnattachedAttributes, EntityDeclaration.UnattachedAttributeRole);
-				
+
 				if (location != null && curLoc < location.Count) {
 					newType.AddChild (new CSharpTokenNode (Convert (location [curLoc++]), Roles.RBrace), Roles.RBrace);
 					
@@ -732,6 +736,8 @@ namespace ICSharpCode.NRefactory.PlayScript
 					// parser error, set end node to max value.
 					newType.AddChild (new ErrorNode (), Roles.Error);
 				}
+
+				AddAttributeSection (newType, e.UnattachedAttributes, EntityDeclaration.UnattachedAttributeRole);
 				typeStack.Pop ();
 				AddType (newType);
 			}
@@ -1824,40 +1830,32 @@ namespace ICSharpCode.NRefactory.PlayScript
 					result.AddChild (new CSharpTokenNode (Convert (location [1]), Roles.RPar), Roles.RPar);
 				if (location != null && location.Count > 2)
 					result.AddChild (new CSharpTokenNode (Convert (location [2]), Roles.LBrace), Roles.LBrace);
-				if (switchStatement.Sections != null) {
-					foreach (var section in switchStatement.Sections) {
-						var newSection = new SwitchSection ();
-						if (section.Labels != null) {
-							foreach (var caseLabel in section.Labels) {
-								var newLabel = new CaseLabel ();
-								if (caseLabel.Label != null) {
-									newLabel.AddChild (new CSharpTokenNode (Convert (caseLabel.Location), CaseLabel.CaseKeywordRole), CaseLabel.CaseKeywordRole);
-									if (caseLabel.Label != null)
-										newLabel.AddChild ((Expression)caseLabel.Label.Accept (this), Roles.Expression);
-									var colonLocation = LocationsBag.GetLocations (caseLabel);
-									if (colonLocation != null)
-										newLabel.AddChild (new CSharpTokenNode (Convert (colonLocation [0]), Roles.Colon), Roles.Colon);
-								} else {
-									newLabel.AddChild (new CSharpTokenNode (Convert (caseLabel.Location), CaseLabel.DefaultKeywordRole), CaseLabel.DefaultKeywordRole);
-									newLabel.AddChild (new CSharpTokenNode (new TextLocation (caseLabel.Location.Row, caseLabel.Location.Column + "default".Length), Roles.Colon), Roles.Colon);
-								}
-								newSection.AddChild (newLabel, SwitchSection.CaseLabelRole);
+				SwitchSection newSection = null;
+				bool lastWasCase = false, added = true;
+				if (switchStatement.Block != null) {
+					foreach (var child in switchStatement.Block.Statements) {
+						var statement = child.Accept(this);
+						var caseLabel = statement as CaseLabel;
+						if (caseLabel != null) {
+							if (!lastWasCase) {
+								newSection = new SwitchSection();
+								added = false;
 							}
+							newSection.AddChild (caseLabel, SwitchSection.CaseLabelRole);
+							lastWasCase = true;
+						} else {
+							if (lastWasCase) {
+								result.AddChild (newSection, SwitchStatement.SwitchSectionRole);
+								lastWasCase = false;
+								added = true;
+							}
+							newSection.AddChild((Statement)statement, Roles.EmbeddedStatement);
 						}
-						
-						var blockStatement = section.Block;
-						var bodyBlock = new BlockStatement ();
-						int curLocal = 0;
-						AddBlockChildren (bodyBlock, blockStatement, ref curLocal);
-						foreach (var statement in bodyBlock.Statements) {
-							statement.Remove ();
-							newSection.AddChild (statement, Roles.EmbeddedStatement);
-							
-						}
-						result.AddChild (newSection, SwitchStatement.SwitchSectionRole);
 					}
 				}
-				
+				if (!added)
+					result.AddChild (newSection, SwitchStatement.SwitchSectionRole);
+
 				if (location != null && location.Count > 3) {
 					result.AddChild (new CSharpTokenNode (Convert (location [3]), Roles.RBrace), Roles.RBrace);
 				} else {
@@ -1867,7 +1865,25 @@ namespace ICSharpCode.NRefactory.PlayScript
 				
 				return result;
 			}
-			
+
+			public override object Visit(SwitchLabel switchLabel)
+			{
+				var newLabel = new CaseLabel ();
+				if (!switchLabel.IsDefault) {
+					newLabel.AddChild (new CSharpTokenNode (Convert (switchLabel.Location), CaseLabel.CaseKeywordRole), CaseLabel.CaseKeywordRole);
+					if (switchLabel.Label != null)
+						newLabel.AddChild ((Expression)switchLabel.Label.Accept (this), Roles.Expression);
+					var colonLocation = LocationsBag.GetLocations (switchLabel);
+					if (colonLocation != null)
+						newLabel.AddChild (new CSharpTokenNode (Convert (colonLocation [0]), Roles.Colon), Roles.Colon);
+				} else {
+					newLabel.AddChild (new CSharpTokenNode (Convert (switchLabel.Location), CaseLabel.DefaultKeywordRole), CaseLabel.DefaultKeywordRole);
+					newLabel.AddChild (new CSharpTokenNode (new TextLocation (switchLabel.Location.Row, switchLabel.Location.Column + "default".Length), Roles.Colon), Roles.Colon);
+				}
+				return newLabel;
+			}
+
+
 			public override object Visit (Lock lockStatement)
 			{
 				var result = new LockStatement ();
@@ -2108,7 +2124,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 			public override object Visit (Mono.CSharpPs.Expression expression)
 			{
 				Console.WriteLine ("Visit unknown expression:" + expression);
-				System.Console.WriteLine (Environment.StackTrace);
+//				System.Console.WriteLine (Environment.StackTrace);
 				return null;
 			}
 			
@@ -3594,7 +3610,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 			}
 			#endregion
 		}
-		
+
 		public PlayScriptParser ()
 		{
 			compilerSettings = new CompilerSettings();
@@ -3623,7 +3639,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 			return GetOuterLeft (next);
 		}
 		
-		static void InsertComments (CompilerCompilationUnit top, ConversionVisitor conversionVisitor)
+		void InsertComments (CompilerCompilationUnit top, ConversionVisitor conversionVisitor)
 		{
 			var leaf = GetOuterLeft (conversionVisitor.Unit);
 			for (int i = 0; i < top.SpecialsBag.Specials.Count; i++) {
@@ -3646,7 +3662,7 @@ namespace ICSharpCode.NRefactory.PlayScript
 						StartsLine = comment.StartsLine,
 						Content = isMultilineDocumentationComment ? comment.Content.Substring(1) : comment.Content
 					};
-				} else {
+				} else if (!GenerateTypeSystemMode) {
 					var directive = special as SpecialsBag.PreProcessorDirective;
 					if (directive != null) {
 						newLeaf = new PreProcessorDirective ((ICSharpCode.NRefactory.PlayScript.PreProcessorDirectiveType)((int)directive.Cmd & 0xF), new TextLocation (directive.Line, directive.Col), new TextLocation (directive.EndLine, directive.EndCol)) {
@@ -3654,14 +3670,14 @@ namespace ICSharpCode.NRefactory.PlayScript
 							Take = directive.Take
 						};
 					} else {
-	/*					var newLine = special as SpecialsBag.NewLineToken;
+						var newLine = special as SpecialsBag.NewLineToken;
 						if (newLine != null) {
 							if (newLine.NewLine == SpecialsBag.NewLine.Unix) {
-								newLeaf = new UnixNewLine (new TextLocation (newLine.Line, newLine.Col));
+								newLeaf = new UnixNewLine (new TextLocation (newLine.Line, newLine.Col + 1));
 							} else {
-								newLeaf = new WindowsNewLine (new TextLocation (newLine.Line, newLine.Col));
+								newLeaf = new WindowsNewLine (new TextLocation (newLine.Line, newLine.Col + 1));
 							}
-						}*/
+						}
 					}
 				}
 				if (newLeaf == null)

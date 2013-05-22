@@ -40,7 +40,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 			}
 			yield return new CodeAction(context.TranslateString("Use string.Empty"), script => {
 				script.Replace(expr, new MemberReferenceExpression (new TypeReferenceExpression (new PrimitiveType ("string")), "Empty"));
-			});
+			}, expr);
 		}
 		
 		static PrimitiveExpression GetEmptyString (RefactoringContext context)

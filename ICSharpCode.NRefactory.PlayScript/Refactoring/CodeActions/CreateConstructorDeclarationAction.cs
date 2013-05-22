@@ -57,7 +57,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					resolveResult.Member.DeclaringTypeDefinition,
 					decl
 				);
-			});
+			}, createExpression);
 		}
 	}
 }

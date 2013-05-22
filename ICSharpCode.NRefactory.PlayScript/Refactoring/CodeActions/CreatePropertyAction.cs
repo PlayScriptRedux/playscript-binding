@@ -112,7 +112,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 
 				script.InsertWithCursor(context.TranslateString("Create property"), Script.InsertPosition.Before, decl);
 
-			});
+			}, identifier);
 		}
 
 		internal static string GetPropertyName(Expression expr)

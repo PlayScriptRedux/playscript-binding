@@ -33,8 +33,8 @@ using ICSharpCode.NRefactory.PlayScript.Refactoring;
 
 namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 {
-	[PolicyType ("Naming Conventions Policy")]
-	public class NameConventionPolicy : IEquatable<NameConventionPolicy>
+	[PolicyType ("PlayScript naming Conventions Policy")]
+	public class PlayScriptNameConventionPolicy : IEquatable<PlayScriptNameConventionPolicy>
 	{
 		NameConventionRule[] rules = new NameConventionRule[0];
 
@@ -44,21 +44,21 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 			set { rules = value; }
 		}
 
-		public NameConventionPolicy Clone ()
+		public PlayScriptNameConventionPolicy Clone ()
 		{
-			var result = new NameConventionPolicy ();
+			var result = new PlayScriptNameConventionPolicy ();
 			result.rules = new List<NameConventionRule> (rules.Select (r => r.Clone ())).ToArray ();
 			return result;
 		}
 
-		public NameConventionPolicy ()
+		public PlayScriptNameConventionPolicy ()
 		{
 			rules = new List<NameConventionRule> (DefaultRules.GetFdgRules ().Select (r => new NameConventionRule (r))).ToArray ();
 		}
 
 		class NamingConventionService : ICSharpCode.NRefactory.PlayScript.Refactoring.NamingConventionService
 		{
-			NameConventionPolicy policy;
+			PlayScriptNameConventionPolicy policy;
 			ICSharpCode.NRefactory.PlayScript.Refactoring.NamingRule[] rules = null;
 			public override IEnumerable<ICSharpCode.NRefactory.PlayScript.Refactoring.NamingRule> Rules {
 				get {
@@ -69,7 +69,7 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 				}
 			}
 
-			public NamingConventionService (MonoDevelop.PlayScript.Refactoring.CodeIssues.NameConventionPolicy policy)
+			public NamingConventionService (MonoDevelop.PlayScript.Refactoring.CodeIssues.PlayScriptNameConventionPolicy policy)
 			{
 				this.policy = policy;
 			}
@@ -82,7 +82,7 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 		}
 
 		#region IEquatable implementation
-		public bool Equals (NameConventionPolicy other)
+		public bool Equals (PlayScriptNameConventionPolicy other)
 		{
 			if (Rules.Length != other.Rules.Length) 
 				return false;

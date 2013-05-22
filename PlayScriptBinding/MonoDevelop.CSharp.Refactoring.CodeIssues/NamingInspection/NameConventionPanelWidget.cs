@@ -36,9 +36,9 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 	partial class NameConventionPanelWidget : Gtk.Bin
 	{
 		TreeStore treeStore = new TreeStore (typeof(NameConventionRule));
-		NameConventionPolicy policy;
+		PlayScriptNameConventionPolicy policy;
 
-		public NameConventionPolicy Policy {
+		public PlayScriptNameConventionPolicy Policy {
 			get {
 				return policy;
 			}

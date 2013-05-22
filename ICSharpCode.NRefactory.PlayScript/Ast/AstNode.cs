@@ -663,6 +663,19 @@ namespace ICSharpCode.NRefactory.PlayScript
 			return null;
 		}
 
+		/// <summary>
+		/// Gets the next node which fullfills a given predicate
+		/// </summary>
+		/// <returns>The next node.</returns>
+		/// <param name="pred">The predicate.</param>
+		public AstNode GetNextNode (Func<AstNode, bool> pred)
+		{
+			var next = GetNextNode();
+			while (next != null && !pred (next))
+				next = next.GetNextNode();
+			return next;
+		}
+
 		public AstNode GetPrevNode ()
 		{
 			if (PrevSibling != null)
@@ -670,6 +683,19 @@ namespace ICSharpCode.NRefactory.PlayScript
 			if (Parent != null)
 				return Parent.GetPrevNode ();
 			return null;
+		}
+
+		/// <summary>
+		/// Gets the previous node which fullfills a given predicate
+		/// </summary>
+		/// <returns>The next node.</returns>
+		/// <param name="pred">The predicate.</param>
+		public AstNode GetPrevNode (Func<AstNode, bool> pred)
+		{
+			var prev = GetPrevNode();
+			while (prev != null && !pred (prev))
+				prev = prev.GetPrevNode();
+			return prev;
 		}
 		// filters all non c# nodes (comments, white spaces or pre processor directives)
 		public AstNode GetCSharpNodeBefore (AstNode node)
@@ -681,6 +707,32 @@ namespace ICSharpCode.NRefactory.PlayScript
 				n = n.GetPrevNode ();
 			}
 			return null;
+		}
+
+		/// <summary>
+		/// Gets the next sibling which fullfills a given predicate
+		/// </summary>
+		/// <returns>The next node.</returns>
+		/// <param name="pred">The predicate.</param>
+		public AstNode GetNextSibling (Func<AstNode, bool> pred)
+		{
+			var next = NextSibling;
+			while (next != null && !pred (next))
+				next = next.NextSibling;
+			return next;
+		}
+
+		/// <summary>
+		/// Gets the next sibling which fullfills a given predicate
+		/// </summary>
+		/// <returns>The next node.</returns>
+		/// <param name="pred">The predicate.</param>
+		public AstNode GetPrevSibling (Func<AstNode, bool> pred)
+		{
+			var prev = PrevSibling;
+			while (prev != null && !pred (prev))
+				prev = prev.PrevSibling;
+			return prev;
 		}
 		
 		#region GetNodeAt
@@ -869,14 +921,19 @@ namespace ICSharpCode.NRefactory.PlayScript
 				node = next;
 			}
 		}
-		
+		[Obsolete("Use ToString(options).")]
+		public string GetText (CSharpFormattingOptions formattingOptions = null)
+		{
+			return ToString(formattingOptions);
+		}
+
 		/// <summary>
 		/// Gets the node as formatted C# output.
 		/// </summary>
 		/// <param name='formattingOptions'>
 		/// Formatting options.
 		/// </param>
-		public virtual string GetText (CSharpFormattingOptions formattingOptions = null)
+		public virtual string ToString (CSharpFormattingOptions formattingOptions)
 		{
 			if (IsNull)
 				return "";
@@ -884,7 +941,12 @@ namespace ICSharpCode.NRefactory.PlayScript
 			AcceptVisitor (new CSharpOutputVisitor (w, formattingOptions ?? FormattingOptionsFactory.CreateMono ()));
 			return w.ToString ();
 		}
-		
+
+		public sealed override string ToString()
+		{
+			return ToString(null);
+		}
+
 		/// <summary>
 		/// Returns true, if the given coordinates (line, column) are in the node.
 		/// </summary>

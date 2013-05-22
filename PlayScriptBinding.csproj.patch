@@ -1,5 +1,5 @@
---- ../playscript-monodevelop/main/src/addins/PlayScriptBinding/PlayScriptBinding.csproj	2013-05-02 21:05:36.000000000 -0700
-+++ ./PlayScriptBinding/PlayScriptBinding.csproj	2013-05-02 22:04:22.000000000 -0700
+--- ../playscript-monodevelop/main/src/addins/PlayScriptBinding/PlayScriptBinding.csproj	2013-05-21 16:14:03.000000000 -0700
++++ ./PlayScriptBinding/PlayScriptBinding.csproj	2013-05-21 22:14:40.000000000 -0700
 @@ -14,7 +14,7 @@
      <DebugSymbols>True</DebugSymbols>
      <DebugType>full</DebugType>
@@ -18,7 +18,7 @@
      <DefineConstants>GMCS_SOURCE;NET_2_0;MS_COMPATIBLE;FULL_AST;BOOTSTRAP_BASIC</DefineConstants>
      <ErrorReport>prompt</ErrorReport>
      <WarningLevel>4</WarningLevel>
-@@ -36,74 +36,49 @@
+@@ -36,74 +36,60 @@
      <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
    </PropertyGroup>
    <ItemGroup>
@@ -82,52 +82,67 @@
 -      <Name>Mono.Addins</Name>
 -      <Private>False</Private>
 -    </ProjectReference>
-+    <Reference Include="MonoDevelop.Core">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\MonoDevelop.Core.dll</HintPath>
-+    </Reference>
-+    <Reference Include="MonoDevelop.Ide">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\MonoDevelop.Ide.dll</HintPath>
-+    </Reference>
-+    <Reference Include="Mono.TextEditor">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\Mono.TextEditor.dll</HintPath>
-+    </Reference>
-+    <Reference Include="MonoDevelop.Debugger">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\AddIns\MonoDevelop.Debugger\MonoDevelop.Debugger.dll</HintPath>
-+    </Reference>
-+    <Reference Include="Mono.Debugging">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\Mono.Debugging.dll</HintPath>
-+    </Reference>
-+    <Reference Include="MonoDevelop.DesignerSupport">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\AddIns\MonoDevelop.DesignerSupport\MonoDevelop.DesignerSupport.dll</HintPath>
-+    </Reference>
-+    <Reference Include="MonoDevelop.SourceEditor2">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\AddIns\DisplayBindings\SourceEditor\MonoDevelop.SourceEditor2.dll</HintPath>
-+    </Reference>
-+    <Reference Include="MonoDevelop.Refactoring">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\AddIns\MonoDevelop.Refactoring\MonoDevelop.Refactoring.dll</HintPath>
-+    </Reference>
-+    <Reference Include="ICSharpCode.Decompiler">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\ICSharpCode.Decompiler.dll</HintPath>
-+    </Reference>
-+    <Reference Include="Mono.Cecil">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\Mono.Cecil.dll</HintPath>
-+    </Reference>
-+    <Reference Include="ICSharpCode.NRefactory">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\ICSharpCode.NRefactory.dll</HintPath>
-+    </Reference>
-+    <Reference Include="Mono.Addins">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\Mono.Addins.dll</HintPath>
-+    </Reference>
-     <ProjectReference Include="..\ICSharpCode.NRefactory.PlayScript\ICSharpCode.NRefactory.PlayScript.csproj">
-       <Project>{6587E3E6-B14F-4924-B39D-512A78C4C1B2}</Project>
-       <Name>ICSharpCode.NRefactory.PlayScript</Name>
-     </ProjectReference>
+-    <ProjectReference Include="..\ICSharpCode.NRefactory.PlayScript\ICSharpCode.NRefactory.PlayScript.csproj">
+-      <Project>{53DCA265-3C3C-42F9-B647-F72BA678122B}</Project>
+-      <Name>ICSharpCode.NRefactory.PlayScript</Name>
+-    </ProjectReference>
 -    <ProjectReference Include="..\..\..\external\nrefactory\ICSharpCode.NRefactory.CSharp\ICSharpCode.NRefactory.CSharp.csproj">
 -      <Project>{53DCA265-3C3C-42F9-B647-F72BA678122B}</Project>
 -      <Name>ICSharpCode.NRefactory.CSharp</Name>
 -    </ProjectReference>
++    <Reference Include="MonoDevelop.Core">
++      <HintPath>..\dependencies\monodevelop\bin\MonoDevelop.Core.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="MonoDevelop.Ide">
++      <HintPath>..\dependencies\monodevelop\bin\MonoDevelop.Ide.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="Mono.TextEditor">
++      <HintPath>..\dependencies\monodevelop\bin\Mono.TextEditor.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="MonoDevelop.Debugger">
++      <HintPath>..\dependencies\monodevelop\AddIns\MonoDevelop.Debugger\MonoDevelop.Debugger.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="Mono.Debugging">
++      <HintPath>..\dependencies\monodevelop\bin\Mono.Debugging.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="MonoDevelop.DesignerSupport">
++      <HintPath>..\dependencies\monodevelop\AddIns\MonoDevelop.DesignerSupport\MonoDevelop.DesignerSupport.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="MonoDevelop.Refactoring">
++      <HintPath>..\dependencies\monodevelop\AddIns\MonoDevelop.Refactoring\MonoDevelop.Refactoring.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="ICSharpCode.Decompiler">
++      <HintPath>..\dependencies\monodevelop\bin\ICSharpCode.Decompiler.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="Mono.Cecil">
++      <HintPath>..\dependencies\monodevelop\bin\Mono.Cecil.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="ICSharpCode.NRefactory">
++      <HintPath>..\dependencies\monodevelop\bin\ICSharpCode.NRefactory.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="Mono.Addins">
++      <HintPath>..\dependencies\monodevelop\bin\Mono.Addins.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
 +    <Reference Include="ICSharpCode.NRefactory.CSharp">
-+      <HintPath>..\..\..\..\..\..\Applications\Xamarin Studio.app\Contents\MacOS\lib\monodevelop\bin\ICSharpCode.NRefactory.CSharp.dll</HintPath>
++      <HintPath>..\dependencies\monodevelop\bin\ICSharpCode.NRefactory.CSharp.dll</HintPath>
++    </Reference>
++    <Reference Include="MonoDevelop.SourceEditor2">
++      <HintPath>..\dependencies\monodevelop\AddIns\DisplayBindings\SourceEditor\MonoDevelop.SourceEditor2.dll</HintPath>
++      <Private>False</Private>
++    </Reference>
++    <Reference Include="ICSharpCode.NRefactory.PlayScript">
++      <HintPath>..\ICSharpCode.NRefactory.PlayScript\obj\Debug\ICSharpCode.NRefactory.PlayScript.dll</HintPath>
 +    </Reference>
    </ItemGroup>
    <ItemGroup>

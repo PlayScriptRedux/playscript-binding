@@ -14,6 +14,12 @@ rm -rf ../CSharpBinding/Autotools/Makefile
 cp ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs
 cp ../CSharpBinding/MonoDevelop.CSharp/CSharpLanguageBinding.cs ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
 
+# Copy syntax mode files for PlayScript
+rm -rf ../CSharpBinding/SyntaxMode
+mkdir ../CSharpBinding/SyntaxMode
+cp ../../core/Mono.Texteditor/SyntaxModes/CSharpSyntaxMode.xml ../CSharpBinding/SyntaxMode/ActionScriptSyntaxMode.xml
+cp ../../core/Mono.Texteditor/SyntaxModes/CSharpSyntaxMode.xml ../CSharpBinding/SyntaxMode/PlayScriptSyntaxMode.xml
+
 # Make the new PlayScriptBinding folder
 mv ../PlayScriptBinding ../PlayScriptBinding_save
 cp -R ../CSharpBinding ../PlayScriptBinding/
@@ -35,6 +41,20 @@ mv ../PlayScriptBinding/CSharpBinding.addin.xml ../PlayScriptBinding/PlayScriptB
 # Remove language binding files for PlayScript
 rm ../CSharpBinding/MonoDevelop.CSharp/ActionScriptLanguageBinding.cs
 rm ../CSharpBinding/MonoDevelop.CSharp/PlayScriptLanguageBinding.cs
+
+# Remove syntax mode files for PlayScript
+rm -rf ../CSharpBinding/SyntaxMode
+
+# Restore names for policy XML files
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/AllmapCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsAllmapCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsGNUCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/GNUTextStylePolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsGNUTextStylePolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/InvariantTextStylePolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsInvariantTextStylePolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/KRCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsKRCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/MonoCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsMonoCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/SharpDevelopCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsSharpDevelopCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/WhitesmithsCSharpPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Formatting/policies/PsWhitesmithsCSharpPolicy.xml
+mv ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/MonoNameConventionPolicy.xml ../PlayScriptBinding/MonoDevelop.CSharp.Refactoring.CodeIssues/NamingInspection/PsMonoNameConventionPolicy.xml
 
 # Restore missing files
 git checkout ../PlayScriptBinding/icons

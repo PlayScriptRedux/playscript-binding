@@ -76,7 +76,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					script.InsertAfter(anchorNode, iterator);
 					script.FormatText(usingStatement.EmbeddedStatement);
 				}
-			});
+			}, initializer);
 		}
 
 		CodeAction ActionFromVariableInitializer(RefactoringContext context)
@@ -94,7 +94,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 			return new CodeAction(context.TranslateString("Iterate via foreach"), script => {
 				var iterator = MakeForeach(new IdentifierExpression(initializer.Name), elementType, context);
 				script.InsertAfter(context.GetNode<Statement>(), iterator);
-			});
+			}, initializer);
 		}
 
 		CodeAction ActionFromExpressionStatement(RefactoringContext context)
@@ -117,7 +117,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					script.Replace(expressionStatement, iterator);
 				else
 					script.InsertAfter(expressionStatement, iterator);
-			});
+			}, expression);
 		}
 
 		static ForeachStatement MakeForeach(Expression node, IType type, RefactoringContext context)

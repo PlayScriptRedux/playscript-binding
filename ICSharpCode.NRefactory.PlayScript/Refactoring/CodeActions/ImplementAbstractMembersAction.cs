@@ -62,7 +62,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 						return entity;
 					})
 				);
-			});
+			}, type);
 		}
 
 		public static List<IMember> CollectMembersToImplement(ITypeDefinition implementingType, IType abstractType)

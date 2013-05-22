@@ -95,12 +95,6 @@ namespace Mono.CSharpPs
 
 	public class ParenthesizedExpression : ShimExpression
 	{
-		public ParenthesizedExpression (Expression expr)
-			: base (expr)
-		{
-			loc = expr.Location;
-		}
-
 		public ParenthesizedExpression (Expression expr, Location loc)
 			: base (expr)
 		{
@@ -830,6 +824,12 @@ namespace Mono.CSharpPs
 			get { return true; }
 		}
 
+		public override Location StartLocation {
+			get {
+				return expr.StartLocation;
+			}
+		}
+
 		protected override void CloneTo (CloneContext clonectx, Expression t)
 		{
 			Indirection target = (Indirection) t;
@@ -1046,6 +1046,12 @@ namespace Mono.CSharpPs
 		public Expression Expr {
 			get {
 				return expr;
+			}
+		}
+
+		public override Location StartLocation {
+			get {
+				return (mode & Mode.IsPost) != 0 ? expr.Location : loc;
 			}
 		}
 
@@ -4289,6 +4295,12 @@ namespace Mono.CSharpPs
 
 		public override void Emit (EmitContext ec)
 		{
+			// Optimize by removing any extra null arguments, they are no-op
+			for (int i = 0; i < arguments.Count; ++i) {
+				if (arguments[i].Expr is NullConstant)
+					arguments.RemoveAt (i--);
+			}
+
 			var members = GetConcatMethodCandidates ();
 			var res = new OverloadResolver (members, OverloadResolver.Restrictions.NoBaseMembers, loc);
 			var method = res.ResolveMember<MethodSpec> (new ResolveContext (ec.MemberContext), ref arguments);
@@ -5384,8 +5396,7 @@ namespace Mono.CSharpPs
 			this.expr = expr;		
 			this.arguments = arguments;
 			if (expr != null) {
-				var ma = expr as MemberAccess;
-				loc = ma != null ? ma.GetLeftExpressionLocation () : expr.Location;
+				loc = expr.Location;
 			}
 		}
 
@@ -5407,7 +5418,48 @@ namespace Mono.CSharpPs
 				return mg;
 			}
 		}
+
+		public override Location StartLocation {
+			get {
+				return expr.StartLocation;
+			}
+		}
+
 		#endregion
+
+		public override MethodGroupExpr CanReduceLambda (AnonymousMethodBody body)
+		{
+			if (MethodGroup == null)
+				return null;
+
+			var candidate = MethodGroup.BestCandidate;
+			if (candidate == null || !(candidate.IsStatic || Exp is This))
+				return null;
+
+			var args_count = arguments == null ? 0 : arguments.Count;
+			if (args_count != body.Parameters.Count)
+				return null;
+
+			var lambda_parameters = body.Block.Parameters.FixedParameters;
+			for (int i = 0; i < args_count; ++i) {
+				var pr = arguments[i].Expr as ParameterReference;
+				if (pr == null)
+					return null;
+
+				if (lambda_parameters[i] != pr.Parameter)
+					return null;
+
+				if ((lambda_parameters[i].ModFlags & Parameter.Modifier.RefOutMask) != (pr.Parameter.ModFlags & Parameter.Modifier.RefOutMask))
+					return null;
+			}
+
+			var emg = MethodGroup as ExtensionMethodGroupExpr;
+			if (emg != null) {
+				return MethodGroupExpr.CreatePredefined (candidate, candidate.DeclaringType, MethodGroup.Location);
+			}
+
+			return MethodGroup;
+		}
 
 		protected override void CloneTo (CloneContext clonectx, Expression t)
 		{
@@ -8016,6 +8068,12 @@ namespace Mono.CSharpPs
 			}
 		}
 
+		public override Location StartLocation {
+			get {
+				return expr == null ? loc : expr.StartLocation;
+			}
+		}
+
 		protected override Expression DoResolve (ResolveContext rc)
 		{
 			var e = DoResolveName (rc, null);
@@ -8071,18 +8129,6 @@ namespace Mono.CSharpPs
 				rc.Report.Error (Report.RuntimeErrorId, loc, "Cannot perform member binding on `null' value");
 			else
 				expr.Error_OperatorCannotBeApplied (rc, loc, ".", type);
-		}
-
-		public Location GetLeftExpressionLocation ()
-		{
-			Expression expr = LeftExpression;
-			MemberAccess ma = expr as MemberAccess;
-			while (ma != null && ma.LeftExpression != null) {
-				expr = ma.LeftExpression;
-				ma = expr as MemberAccess;
-			}
-
-			return expr == null ? Location : expr.Location;
 		}
 
 		public static bool IsValidDotExpression (TypeSpec type)
@@ -8604,6 +8650,12 @@ namespace Mono.CSharpPs
 			Expr = e;
 			this.loc = loc;
 			this.Arguments = args;
+		}
+
+		public override Location StartLocation {
+			get {
+				return Expr.StartLocation;
+			}
 		}
 
 		public override bool ContainsEmitWithAwait ()

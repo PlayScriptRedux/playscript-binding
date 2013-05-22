@@ -52,7 +52,7 @@ namespace ICSharpCode.NRefactory.PlayScript.Refactoring
 					Body = catchClause.Body.Clone() as BlockStatement
 				});
 				script.Select(newType);
-			});
+			}, catchClause);
 		}
 
 		#endregion

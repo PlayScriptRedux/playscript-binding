@@ -37,7 +37,7 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 		private global::Gtk.RadioButton radiobuttonFirstUpper;
 		private global::Gtk.Button buttonCancel;
 		private global::Gtk.Button buttonOk;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -303,9 +303,10 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 			this.vbox4.Name = "vbox4";
 			this.vbox4.Spacing = 6;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.radiobuttonPascalCase = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("_PascalCase"));
+			this.radiobuttonPascalCase = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString("_PascalCase"));
 			this.radiobuttonPascalCase.CanFocus = true;
 			this.radiobuttonPascalCase.Name = "radiobuttonPascalCase";
+			this.radiobuttonPascalCase.Active = true;
 			this.radiobuttonPascalCase.DrawIndicator = true;
 			this.radiobuttonPascalCase.UseUnderline = true;
 			this.radiobuttonPascalCase.Group = new global::GLib.SList (global::System.IntPtr.Zero);
@@ -315,7 +316,7 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 			w24.Expand = false;
 			w24.Fill = false;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.radiobuttonCamelCase = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("_camelCase"));
+			this.radiobuttonCamelCase = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString("_camelCase"));
 			this.radiobuttonCamelCase.CanFocus = true;
 			this.radiobuttonCamelCase.Name = "radiobuttonCamelCase";
 			this.radiobuttonCamelCase.DrawIndicator = true;
@@ -327,7 +328,7 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 			w25.Expand = false;
 			w25.Fill = false;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.radiobuttonAllUpper = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("_ALL__Upper"));
+			this.radiobuttonAllUpper = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString("_ALL__Upper"));
 			this.radiobuttonAllUpper.CanFocus = true;
 			this.radiobuttonAllUpper.Name = "radiobuttonAllUpper";
 			this.radiobuttonAllUpper.DrawIndicator = true;
@@ -339,7 +340,7 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 			w26.Expand = false;
 			w26.Fill = false;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.radiobuttonAllLower = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("all__l_ower"));
+			this.radiobuttonAllLower = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString("all__l_ower"));
 			this.radiobuttonAllLower.CanFocus = true;
 			this.radiobuttonAllLower.Name = "radiobuttonAllLower";
 			this.radiobuttonAllLower.DrawIndicator = true;
@@ -351,7 +352,7 @@ namespace MonoDevelop.PlayScript.Refactoring.CodeIssues
 			w27.Expand = false;
 			w27.Fill = false;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.radiobuttonFirstUpper = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("_First__upper"));
+			this.radiobuttonFirstUpper = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString("_First__upper"));
 			this.radiobuttonFirstUpper.CanFocus = true;
 			this.radiobuttonFirstUpper.Name = "radiobuttonFirstUpper";
 			this.radiobuttonFirstUpper.DrawIndicator = true;
