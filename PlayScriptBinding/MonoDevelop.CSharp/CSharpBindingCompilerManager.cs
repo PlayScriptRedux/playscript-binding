@@ -120,7 +120,10 @@ namespace MonoDevelop.PlayScript
 			List<string> gacRoots = new List<string> ();
 			sb.AppendFormat ("\"/out:{0}\"", outputName);
 			sb.AppendLine ();
-			
+
+			string outputPath = System.IO.Path.GetDirectoryName (outputName);
+			List<string> filesToCopy = new List<string> ();
+
 			foreach (ProjectReference lib in projectItems.GetAll <ProjectReference> ()) {
 				if (lib.ReferenceType == ReferenceType.Project && !(lib.OwnerProject.ParentSolution.FindProjectByName (lib.Reference) is DotNetProject))
 					continue;
@@ -135,8 +138,12 @@ namespace MonoDevelop.PlayScript
 							continue;
 						}
 
-						if (alreadyAddedReference.Add (fileName))
+						if (alreadyAddedReference.Add (fileName)) {
 							AppendQuoted (sb, "/r:", refPrefix + fileName);
+							if (lib.LocalCopy) {
+								filesToCopy.Add(refPrefix + fileName);
+							}
+						}
 						
 						if (pkg.GacRoot != null && !gacRoots.Contains (pkg.GacRoot))
 							gacRoots.Add (pkg.GacRoot);
@@ -146,8 +153,12 @@ namespace MonoDevelop.PlayScript
 								if (rpkg == null)
 									continue;
 								foreach (SystemAssembly assembly in rpkg.Assemblies) {
-									if (alreadyAddedReference.Add (assembly.Location))
+									if (alreadyAddedReference.Add (assembly.Location)) {
 										AppendQuoted (sb, "/r:", assembly.Location);
+										if (lib.LocalCopy) {
+											filesToCopy.Add(assembly.Location);
+										}
+									}
 								}
 							}
 						}
@@ -158,6 +169,10 @@ namespace MonoDevelop.PlayScript
 						break;
 					}
 				}
+			}
+
+			if (filesToCopy.Count > 0) {
+				CopyFilesToOutput (filesToCopy, outputPath);
 			}
 			
 			string sysCore = project.AssemblyContext.GetAssemblyFullName ("System.Core", project.TargetFramework);
@@ -356,6 +371,40 @@ namespace MonoDevelop.PlayScript
 				FileService.DeleteFile (error);
 			}
 			return result;
+		}
+
+		static void CopyFilesToOutput(List<string> files, string outputPath) {
+
+			foreach (string srcpath in files) {
+
+				FilePath dest = Path.GetFullPath (Path.Combine (outputPath, Path.GetFileName(srcpath)));
+				FilePath src = Path.GetFullPath (srcpath);
+
+				try {
+					if (dest == src)
+						continue;
+
+					if (File.Exists (dest) && (File.GetLastWriteTimeUtc (dest) >= File.GetLastWriteTimeUtc (src)))
+						continue;
+
+					// Use Directory.Create so we don't trigger the VersionControl addin and try to
+					// add the directory to version control.
+					if (!Directory.Exists (Path.GetDirectoryName (dest)))
+						Directory.CreateDirectory (Path.GetDirectoryName (dest));
+
+					if (File.Exists (src)) {
+						dest.Delete ();
+						FileService.CopyFile (src, dest);
+
+						// Copied files can't be read-only, so they can be removed when rebuilding the project
+						FileAttributes atts = File.GetAttributes (dest);
+						if (atts.HasFlag (FileAttributes.ReadOnly))
+							File.SetAttributes (dest, atts & ~FileAttributes.ReadOnly);
+					}
+
+				} catch (Exception) {
+				}
+			}
 		}
 
 		static string GetExternalCompilerPath()

@@ -17,8 +17,8 @@
 			<Options TargetFrameworkVersion = "4.0" />		
 			<References>
 				<Reference type="Package" refto="System" />
-				<Reference type="Package" refto="pscorlib_aot" />
-				<Reference type="Package" refto="PlayScript.Dynamic_aot" />
+				<Reference type="Package" refto="pscorlib_aot" LocalCopy="true" SpecificVersion="false" />
+				<Reference type="Package" refto="PlayScript.Dynamic_aot" LocalCopy="true" SpecificVersion="false" />
 			</References>
 		</Project>
 	</Combine>
